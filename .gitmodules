@@ -1,0 +1,3 @@
+[submodule "SuperGLU"]
+	path = SuperGLU
+	url = https://github.com/GeneralizedLearningUtilities/SuperGLU.git
