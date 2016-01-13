@@ -30,6 +30,7 @@ RUN sudo /etc/init.d/nginx restart
 
 # Install dependencies
 RUN bash ./Application/setup.sh
+RUN bash ./Application/setup-ec2.sh
 
 RUN chmod +x ./Application/local.sh
 
