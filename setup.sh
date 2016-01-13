@@ -2,7 +2,7 @@
 
 # Symbolic Link to the SuperGLU Repository
 cd ..
-sudo ln -s  ./Application/SuperGLURepo/SuperGLU/ ./Application/SuperGLU 
+sudo ln -s ./SuperGLURepo/SuperGLU/ ./Application/
 
 # Populate static files
 mkdir ./Application/static/SuperGLU/
@@ -11,6 +11,7 @@ sudo rsync -a --prune-empty-dirs --include '*/' --include '*.js' --exclude '*' .
 
 # Make sure we're in our script directory
 cd ./Application/
+ls -l
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $SCRIPT_DIR
 
