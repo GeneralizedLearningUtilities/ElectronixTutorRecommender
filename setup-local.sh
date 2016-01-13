@@ -5,6 +5,7 @@ sudo apt-get update
 
 sudo apt-get -y install mongodb-org
 sudo service mongod start
+sudo ln -s ./test.config ./server.config
 
 mkdir log
 echo 'this is a log file' > log/Re.log 
