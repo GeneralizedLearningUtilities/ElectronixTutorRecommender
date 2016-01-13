@@ -17,16 +17,14 @@ RUN sudo apt-get install -qy python-setuptools
 RUN easy_install pip
 RUN pip install virtualenv
 
+#configure nginx
+RUN sudo rm /etc/nginx/sites-enabled/default
+RUN sudo ln -s ./Application/config/recommender.x-in-y.conf /etc/nginx/conf.d/
 RUN sudo apt-get -y update && sudo apt-get -y upgrade
 
 # Install app
 ADD . ./Application/
 ADD ./config/boto.cfg /etc/boto.cfg
-
-#configure nginx
-RUN sudo rm /etc/nginx/sites-enabled/default
-RUN sudo ln -s ./Application/config/recommender.x-in-y.conf /etc/nginx/conf.d/
-RUN sudo /etc/init.d/nginx restart
 
 # Install dependencies
 WORKDIR ./Application/
@@ -38,6 +36,7 @@ WORKDIR /
 EXPOSE 80
 EXPOSE 443
 #EXPOSE 5533
+RUN sudo /etc/init.d/nginx restart
 
 # TODO: Path unlikely to be correct...
 CMD ["bash", "/Application/local.sh"]
