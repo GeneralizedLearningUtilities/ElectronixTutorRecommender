@@ -89,3 +89,4 @@ cp $SSHDSRC $SSHDBASE.old
 grep -v PrintMotd $SSHDBASE.old > $SSHDBASE.new
 printf "\n\nPrintMotd no\n" >> $SSHDBASE.new
 sudo cp $SSHDBASE.new $SSHDSRC
+
