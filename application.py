@@ -127,9 +127,11 @@ def before_first():
 
     if application.debug:
         # Debug/local dev
+        logWarning('Debug Mode: MongoDB')
         default_database(Database( 'mongodb', mongo_url='mongodb://localhost:27017/TestDB'))
     else:
         # Production!
+        logWarning('Production Mode: DynamoDB')
         default_database(Database('dynamodb'))
 
     # Make sure we have our tables
