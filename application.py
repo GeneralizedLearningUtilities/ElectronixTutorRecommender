@@ -14,10 +14,10 @@ import eventlet
 from SuperGLU.Util.ErrorHandling import logError, logWarning
 from flask import Flask
 from Blueprints import BASIC_BLUEPRINT
-from Tables import IncomingMessage
 from SuperGLU.Core.MessagingGateway import HTTPMessagingGateway
 from SuperGLU.Core.Messaging import Message
-from SuperGLU.Services.LoggingService.LoggingService import CSVLoggingService, BadDialogCSVLogger, DBLoggingService
+from SuperGLU.Services.LoggingService.LoggingService import (CSVLoggingService,
+    BadDialogCSVLogger, DBLoggingService, IncomingMessage)
 
 from threading import Thread
 from gludb.config import Database, default_database, clear_database_config

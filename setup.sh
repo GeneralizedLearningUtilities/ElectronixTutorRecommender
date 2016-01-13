@@ -19,6 +19,9 @@ pip install boto
 pip install eventlet
 # pip install SuperGLU
 
+# Symbolic Link to the SuperGLU Repository
+ln -s SuperGLURepo/SuperGLU SuperGLU
+
 # Populate static files
 mkdir static/SuperGLU
-rsync -a --prune-empty-dirs --include '*/' --include '*.js' --exclude '*' SuperGLU static/
+rsync -a --prune-empty-dirs --include '*/' --include '*.js' --exclude '*' SuperGLURepo/SuperGLU/ static/SuperGLU/
