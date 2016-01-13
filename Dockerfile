@@ -12,9 +12,8 @@ RUN easy_install pip
 RUN pip install virtualenv
 
 # Install app
-ADD ./SuperGLU ./SuperGLU
-ADD ./SuperGLU/Applications/Recommender ./Application
-ADD ./SuperGLU/Applications/Recommender/config/boto.cfg /etc/boto.cfg
+ADD . ./Application
+ADD ./config/boto.cfg /etc/boto.cfg
 
 #configure nginx
 RUN sudo rm /etc/nginx/sites-enabled/default

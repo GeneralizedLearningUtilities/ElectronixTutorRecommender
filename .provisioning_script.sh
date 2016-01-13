@@ -11,8 +11,8 @@ sudo pip install --upgrade requests[security]
 sudo pip install --upgrade pip
 
 # Make symbolic links to the sync'ed directory for more "natural" work
-ln -s ~/Application ./SuperGLU/Applications/Recommender/ 
-ln -s ~/SuperGLU ./SuperGLU/
+# ln -s ~/Application ./SuperGLU/Applications/Recommender/ 
+# ln -s ~/SuperGLU ./SuperGLU/
 
 # Remove Ubuntu's landscape stuff and clear login messages
 sudo apt-get purge -y landscape-client landscape-common
