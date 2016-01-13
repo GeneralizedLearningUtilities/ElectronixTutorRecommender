@@ -20,7 +20,7 @@ RUN pip install virtualenv
 RUN sudo apt-get -y update && sudo apt-get -y upgrade
 
 # Install app
-ADD . ./Application
+ADD . ./Application/
 ADD ./config/boto.cfg /etc/boto.cfg
 
 #configure nginx
@@ -29,10 +29,11 @@ RUN sudo ln -s ./Application/config/recommender.x-in-y.conf /etc/nginx/conf.d/
 RUN sudo /etc/init.d/nginx restart
 
 # Install dependencies
-RUN bash ./Application/setup.sh
-RUN bash ./Application/setup-ec2.sh
-
-RUN chmod +x ./Application/local.sh
+WORKDIR ./Application/
+RUN bash setup.sh
+RUN bash setup-ec2.sh
+RUN chmod +x local.sh
+WORKDIR /
 
 EXPOSE 80
 EXPOSE 443
