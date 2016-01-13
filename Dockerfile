@@ -1,5 +1,7 @@
 FROM ubuntu:14.04
 
+RUN sudo apt-get -y update && sudo apt-get -y upgrade
+
 RUN sudo apt-get -y install git
 RUN sudo apt-get -y install software-properties-common
 RUN sudo add-apt-repository ppa:nginx/stable
