@@ -24,7 +24,7 @@ RUN sudo apt-get -y update && sudo apt-get -y upgrade
 
 # Install app
 ADD . ./Application/
-ADD ./config/boto.cfg /etc/boto.cfg
+#ADD ./config/boto.cfg /etc/boto.cfg
 ADD ./prod.config ./Application/server.config
 
 # Install dependencies
