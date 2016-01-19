@@ -2,6 +2,7 @@
 
 # Install stuff I know you'll need
 sudo apt-get upgrade
+sudo apt-get update
 sudo apt-get -y install gcc
 sudo apt-get -y install git
 sudo apt-get -y install build-essential 
