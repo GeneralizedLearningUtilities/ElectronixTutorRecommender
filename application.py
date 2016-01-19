@@ -24,7 +24,7 @@ from gludb.config import Database, default_database, clear_database_config
 from config import env_populate
 
 APPLICATION_NAME = 'Recommender'
-DEBUG_MODE = False
+DEBUG_MODE = True
 DEFAULT_PORT = 5533
 
 
@@ -99,16 +99,23 @@ def background_thread():
             MESSAGING_GATEWAY.processQueuedMessages()
 
             
-def StartServer(app=None, socketio=None, host='localhost', port=DEFAULT_PORT, debug=True):
+def StartServer(app=None, socketio=None, host=None, port=DEFAULT_PORT, debug=True):
+    if socketio is None: socketio = SOCKET_IO_CORE
+    if host is None:
+        if debug:
+            host = '0.0.0.0'
+        else:
+            host = '127.0.0.1'
     Thread(target=background_thread).start()
     logWarning("Starting Socket App1")
     try:
-        host = '0.0.0.0'
         logWarning(host)
         logWarning(port)
         socketio.run(app, host=host, port=port)
     except Exception as err:
+        logError("Error: Could not start socketio.")
         DB_CONNECTION.close()
+        
 # Connection Monitoring
 #------------------------------
 @SOCKET_IO_CORE.on('connect', namespace='/messaging')
@@ -124,7 +131,6 @@ def onDisconnect():
 @application.before_first_request
 def before_first():
     logWarning('Handling database init')
-
     if application.debug:
         # Debug/local dev
         logWarning('Debug Mode: MongoDB')
@@ -145,6 +151,6 @@ def before_first():
 def main():
     # Listen on all addresses if running under Vagrant, else listen
     # on localhost
-    StartServer(application, SOCKET_IO_CORE, 'localhost', DEFAULT_PORT)
+    StartServer(application, SOCKET_IO_CORE, None, DEFAULT_PORT)
 if __name__ == '__main__':
     main()

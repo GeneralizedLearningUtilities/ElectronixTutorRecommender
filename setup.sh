@@ -6,7 +6,7 @@ sudo ln -s ./SuperGLURepo/SuperGLU/ ./Application/
 
 # Populate static files
 mkdir ./Application/log/
-echo 'Started the log file.' > log/Re.log 
+echo 'Started the log file.' > ./Application/log/Re.log 
 mkdir ./Application/static/SuperGLU/
 sudo chmod 755 ./Application/static/SuperGLU/
 sudo rsync -a --prune-empty-dirs --include '*/' --include '*.js' --exclude '*' ./Application/SuperGLURepo/SuperGLU ./Application/static/
