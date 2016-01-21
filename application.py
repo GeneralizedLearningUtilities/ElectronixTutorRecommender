@@ -15,7 +15,7 @@ from SuperGLU.Util.ErrorHandling import logError, logWarning
 from flask import Flask
 from Blueprints import BASIC_BLUEPRINT
 from SuperGLU.Core.MessagingGateway import HTTPMessagingGateway
-from SuperGLU.Core.Messaging import Message
+from SuperGLU.Core.Messaging import Message, MessageLite
 from SuperGLU.Services.LoggingService.LoggingService import (CSVLoggingService,
     BadDialogCSVLogger, DBLoggingService, IncomingMessage)
 
@@ -57,6 +57,8 @@ else:
         level=logging.INFO
     )
 
+applicationName = application.config.get('APPLICATION_NAME', 'noName')
+    
 logWarning('Application debug is %s'%(application.debug,))
 
 # Register our blueprints
@@ -141,7 +143,10 @@ def before_first():
         default_database(Database('dynamodb'))
 
     # Make sure we have our tables
+    #IncomingMessage.set_table_name(applicationName + '_' + IncomingMessage.get_table_name())
     IncomingMessage.ensure_table()
+    #MessageLite.set_table_name(applicationName + '_' + MessageLite.get_table_name())
+    MessageLite.ensure_table()
     #Transcript.ensure_table()
     #Taxonomy.ensure_table()
 
