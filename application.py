@@ -144,10 +144,10 @@ def before_first():
         default_database(Database('dynamodb'))
 
     # Make sure we have our tables
-    #IncomingMessage.set_table_name(applicationName + '_' + IncomingMessage.get_table_name())
+    IncomingMessage.set_table_name(applicationName + '_' + IncomingMessage.get_table_name())
     IncomingMessage.ensure_table()
-    #MessageLite.set_table_name(applicationName + '_' + MessageLite.get_table_name())
-    #MessageLite.ensure_table()
+    MessageLite.set_table_name(applicationName + '_' + MessageLite.get_table_name())
+    MessageLite.ensure_table()
     #Transcript.ensure_table()
     #Taxonomy.ensure_table()
 
