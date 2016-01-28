@@ -16,7 +16,7 @@ from flask import Flask
 from Blueprints import BASIC_BLUEPRINT
 from SuperGLU.Core.MessagingGateway import HTTPMessagingGateway
 from SuperGLU.Core.Messaging import Message
-from SuperGLU.Core.Messaging import MessageLite
+from SuperGLU.Core.MessagingDB import MessageLite
 from SuperGLU.Services.LoggingService.LoggingService import (CSVLoggingService,
     BadDialogCSVLogger, DBLoggingService, IncomingMessage)
 
