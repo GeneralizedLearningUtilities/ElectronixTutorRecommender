@@ -28,5 +28,6 @@ pip install flask-socketio==1.1
 pip install pymongo
 pip install boto
 pip install eventlet
+pip install json_delta
 # pip install gludb
 # pip install SuperGLU
