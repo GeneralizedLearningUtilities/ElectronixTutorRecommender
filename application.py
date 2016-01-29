@@ -18,10 +18,11 @@ from SuperGLU.Core.MessagingGateway import HTTPMessagingGateway
 from SuperGLU.Core.Messaging import Message
 from SuperGLU.Core.MessagingDB import MessageLite
 from SuperGLU.Services.LoggingService.LoggingService import (CSVLoggingService,
-    BadDialogCSVLogger, DBLoggingService, IncomingMessage)
+    DBLoggingService, IncomingMessage)
 
 from threading import Thread
-from gludb.config import Database, default_database, clear_database_config
+from gludb.config import (Database, default_database, 
+    clear_database_config, set_db_application_prefix)
 from config import env_populate
 
 APPLICATION_NAME = 'Recommender'
@@ -142,11 +143,10 @@ def before_first():
         # Production!
         logWarning('Production Mode: DynamoDB')
         default_database(Database('dynamodb'))
+    set_db_application_prefix(APPLICATION_NAME)
 
     # Make sure we have our tables
-    IncomingMessage.set_table_name(applicationName + '_' + IncomingMessage.get_table_name())
     IncomingMessage.ensure_table()
-    MessageLite.set_table_name(applicationName + '_' + MessageLite.get_table_name())
     MessageLite.ensure_table()
     #Transcript.ensure_table()
     #Taxonomy.ensure_table()
