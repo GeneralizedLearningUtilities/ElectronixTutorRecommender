@@ -1,3 +1,6 @@
 [submodule "SuperGLURepo"]
 	path = SuperGLURepo
 	url = https://github.com/GeneralizedLearningUtilities/SuperGLU.git
+[submodule "GLUDBRepo"]
+	path = GLUDBRepo
+	url = https://github.com/GeneralizedLearningUtilities/GLUDB.git
