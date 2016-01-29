@@ -16,7 +16,7 @@ from flask import Flask
 from Blueprints import BASIC_BLUEPRINT
 from SuperGLU.Core.MessagingGateway import HTTPMessagingGateway
 from SuperGLU.Core.Messaging import Message
-from SuperGLU.Core.MessagingDB import MessageLite
+from SuperGLU.Core.MessagingDB import DBLoggedMessage
 from SuperGLU.Services.LoggingService.LoggingService import (CSVLoggingService,
     DBLoggingService, IncomingMessage)
 
@@ -59,7 +59,7 @@ else:
         level=logging.INFO
     )
 
-applicationName = application.config.get('APPLICATION_NAME', 'noName')
+APPLICATION_NAME = application.config.get('APPLICATION_NAME', 'noName')
     
 logWarning('Application debug is %s'%(application.debug,))
 
@@ -147,7 +147,7 @@ def before_first():
 
     # Make sure we have our tables
     IncomingMessage.ensure_table()
-    MessageLite.ensure_table()
+    DBLoggedMessage.ensure_table()
     #Transcript.ensure_table()
     #Taxonomy.ensure_table()
 
