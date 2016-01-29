@@ -6,4 +6,5 @@ sudo apt-get update
 sudo apt-get -y install mongodb-org
 sudo service mongod start
 sudo ln -s ./test.config ./server.config
-sudo ln -s ../SuperGLU/SuperGLU/ ./SuperGLU
+sudo ln -s ../SuperGLU/ ./SuperGLURepo
+sudo ln -s ../GLUDB ./GLUDBRepo
