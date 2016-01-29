@@ -11,6 +11,7 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 80, host: 80
   config.vm.synced_folder ".", "/home/vagrant/Application"
   config.vm.synced_folder "../SuperGLU", "/home/vagrant/SuperGLU"
+  config.vm.synced_folder "../GLUDB", "/home/vagrant/GLUDB"
   config.vm.provider "virtualbox" do |vb|
     vb.gui = false
     vb.memory = "512"

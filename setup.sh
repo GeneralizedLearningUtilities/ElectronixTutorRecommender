@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# Symbolic Link to the SuperGLU Repository
+# Symbolic Link to the SuperGLU and GLUDB Repos
 cd ..
 sudo ln -s ./SuperGLURepo/SuperGLU/ ./Application/
+sudo ln -s ./GLUDBRepo/gludb/ ./Application/
 
 # Populate static files
 mkdir ./Application/log/
@@ -22,10 +23,10 @@ cd $SCRIPT_DIR
 virtualenv -p python3 env --always-copy
 source $SCRIPT_DIR/env/bin/activate
 #pip install --upgrade requests[security]
-pip install gludb
 pip install Flask
 pip install flask-socketio==1.1
 pip install pymongo
 pip install boto
 pip install eventlet
+# pip install gludb
 # pip install SuperGLU
