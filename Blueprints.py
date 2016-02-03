@@ -29,6 +29,10 @@ def activityWindow():
 def loggingWindow():
     return render_template('LoggerWindow.html')
     
+@BASIC_BLUEPRINT.route('/QueryLogDebug.html')
+def queryLogDebugWindow():
+    return render_template('QueryLogDebug.html')
+    
 @BASIC_BLUEPRINT.route('/js/<path:path>')
 def javascriptImports(path):
     if path[-3:] == '.js':
