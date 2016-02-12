@@ -17,6 +17,7 @@ from Blueprints import BASIC_BLUEPRINT
 from SuperGLU.Core.MessagingGateway import HTTPMessagingGateway
 from SuperGLU.Core.Messaging import Message
 from SuperGLU.Core.MessagingDB import DBLoggedMessage
+from SuperGLU.Services.StudentModel.PersistentData import initDerivedDataTables
 from SuperGLU.Services.LoggingService.LoggingService import (CSVLoggingService,
     DBLoggingService, IncomingMessage)
 
@@ -148,6 +149,7 @@ def before_first():
     # Make sure we have our tables
     IncomingMessage.ensure_table()
     DBLoggedMessage.ensure_table()
+    initDerivedDataTables()
     #Transcript.ensure_table()
     #Taxonomy.ensure_table()
 
