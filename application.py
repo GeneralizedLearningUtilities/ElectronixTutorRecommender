@@ -20,6 +20,8 @@ from SuperGLU.Core.MessagingDB import DBLoggedMessage
 from SuperGLU.Services.StudentModel.PersistentData import initDerivedDataTables
 from SuperGLU.Services.LoggingService.LoggingService import (CSVLoggingService,
     DBLoggingService, IncomingMessage)
+from SuperGLU.Services.StudentModel.StudentModel import StudentModelMessaging
+from SuperGLU.Services.StorageService.GLUDBStorageService import GLUDBStorageService
 
 from threading import Thread
 from gludb.config import (Database, default_database, 
@@ -71,7 +73,7 @@ application.register_blueprint(BASIC_BLUEPRINT)
 SOCKET_IO_CORE = flask.ext.socketio.SocketIO(application)
 
 #Allow some env specification of helpful test services
-services = [DBLoggingService()]
+services = [DBLoggingService(), StudentModelMessaging(), GLUDBStorageService()]
 
 MESSAGING_GATEWAY = HTTPMessagingGateway(
         None,
