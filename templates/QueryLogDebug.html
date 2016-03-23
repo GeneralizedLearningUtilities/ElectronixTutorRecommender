@@ -27,6 +27,8 @@
 		<script type="text/javascript" src="/js/reference-data.js"></script>
 
 		<script type="text/javascript">
+            var ELECTRONIX_TUTOR_TASK_UPLOAD_VERB = "ElectronixTutorTaskUpload";
+        
 			var LOGGING_SERVICE,                    // Test service to send messages to the parent about an activity
                 GATEWAY_SERVICE,                    // Gateway service for relaying messages in this frame
                 PARENT_POSTING_STUB,                // Stub that represents the parent frame's messaging gateway
@@ -85,14 +87,54 @@
             var onClickTheOnlyButton = function(){
                 var firstName = getParameterByName('p6'),	// This can be used to address the student by first name
                     score = calculateScore();
-                LOGGING_SERVICE.sendKCScore('KC1', 15, 1.0);
-                LOGGING_SERVICE.sendKCScore('KC2', 12, 1.0);
-                LOGGING_SERVICE.sendKCScore('KC1', 20, 1.0);
-                LOGGING_SERVICE.sendKCScore('KC1', 5, 1.0);
-                LOGGING_SERVICE.sendKCScore('KC1', 17, 1.0);
+                LOGGING_SERVICE.sendKCScore('KC1', .15, 1.0);
+                LOGGING_SERVICE.sendKCScore('KC2', .12, 1.0);
+                LOGGING_SERVICE.sendKCScore('KC1', .20, 1.0);
+                LOGGING_SERVICE.sendKCScore('KC1', .5, 1.0);
+                LOGGING_SERVICE.sendKCScore('KC1', .17, 1.0);
+                LOGGING_SERVICE.sendHint('hint1', 'dummyStepId', 'helpType', 'dummyContent')
+                LOGGING_SERVICE.sendHint('hint2', 'dummyStepId', 'helpType', 'dummyContent')
+                LOGGING_SERVICE.sendHint('hint3', 'dummyStepId', 'helpType', 'dummyContent')
+                LOGGING_SERVICE.sendHint('hint4', 'dummyStepId', 'helpType', 'dummyContent')
+                LOGGING_SERVICE.sendHint('hint5', 'dummyStepId', 'helpType', 'dummyContent')
+                LOGGING_SERVICE.sendPositiveFeedback('posFeedback1', 'dummyStepId', 'dummyContent')
                 LOGGING_SERVICE.sendCompletedTask(score);
                 HEARTBEAT_SERVICE.stop();
             };
+            
+            var FileData = "";
+            
+            var handleFileSelect = function(evt)
+            {
+                // Check for the various File API support.
+                if (window.File && window.FileReader && window.FileList && window.Blob) {
+                    var files = evt.target.files; // FileList object
+                    reader = new FileReader();
+                    reader.onload = fileLoaded;
+                    // Loop through the FileList and render image files as thumbnails.
+                    for (var i = 0, f; f = files[i]; i++) {
+                        reader.readAsText(f);
+                    }
+                } else {
+                  alert('The File APIs are not fully supported in this browser.');
+                }
+            }
+            
+            var fileLoaded = function(evt)
+            {
+                FileData = this.result;
+            }
+           
+            
+            //function to upload csv file to server
+            var onUploadCSV = function() {
+                var msg = Message(self._userId, ELECTRONIX_TUTOR_TASK_UPLOAD_VERB, "tasks", FileData);
+                LOGGING_SERVICE.addContext(msg);
+                LOGGING_SERVICE.sendMessage(msg);
+            
+            
+            }
+            
             
             // Function to run after loading the window
             var oldOnload = window.onload;
@@ -114,6 +156,7 @@
         <script type="text/javascript">
             var initialText = document.getElementById("MyScoreURL").innerHTML;
             document.getElementById("MyScoreURL").innerHTML  = initialText + window.location.href;
+           
         </script>
         <!-- @TODO: Improve assessment methodology ;) -->
         <br>
@@ -123,6 +166,13 @@
             <!-- Note: Don't need a button.  You can automatically send message whenever, 
                  but ASSISTments will take "Completed" as a signal to close your iFrame -->
             <button onclick="onClickTheOnlyButton();">Submit Score</button>
+            <input type="file" id="files" name="files[]" multiple />
+            <output id="list"></output>
+            <button onclick="onUploadCSV();">upload</button>
+            <script type="text/javascript">
+                 document.getElementById('files').addEventListener('change', handleFileSelect, false);
+            </script>
+            
         </div>
     </body>
 </html>
