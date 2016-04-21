@@ -2,6 +2,8 @@
 
 import sys
 from SuperGLU.Services.CSVReader.CSVReader import CSVReader
+from SuperGLU.Services.Recommenders.Recommender import Recommender,\
+    RecommenderMessaging
 if sys.version_info < (3, 0):
     sys.stderr.write("Sorry, requires Python 3.4 or later\n")
     sys.exit(1)
@@ -74,7 +76,7 @@ application.register_blueprint(BASIC_BLUEPRINT)
 SOCKET_IO_CORE = flask.ext.socketio.SocketIO(application)
 
 #Allow some env specification of helpful test services
-services = [DBLoggingService(), StudentModelMessaging(), GLUDBStorageService(), CSVReader()]
+services = [DBLoggingService(), StudentModelMessaging(), GLUDBStorageService(), CSVReader(), RecommenderMessaging()]
 
 MESSAGING_GATEWAY = HTTPMessagingGateway(
         None,

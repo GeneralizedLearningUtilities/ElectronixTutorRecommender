@@ -87,7 +87,8 @@
             var onClickTheOnlyButton = function(){
                 var firstName = getParameterByName('p6'),	// This can be used to address the student by first name
                     score = calculateScore();
-                LOGGING_SERVICE.sendKCScore('KC1', .15, 1.0);
+                LOGGING_SERVICE.sendRequestRecommendedTasks('userName');
+                /**LOGGING_SERVICE.sendKCScore('KC1', .15, 1.0);
                 LOGGING_SERVICE.sendKCScore('KC2', .12, 1.0);
                 LOGGING_SERVICE.sendKCScore('KC1', .20, 1.0);
                 LOGGING_SERVICE.sendKCScore('KC1', .5, 1.0);
@@ -98,7 +99,7 @@
                 LOGGING_SERVICE.sendHint('hint4', 'dummyStepId', 'helpType', 'dummyContent')
                 LOGGING_SERVICE.sendHint('hint5', 'dummyStepId', 'helpType', 'dummyContent')
                 LOGGING_SERVICE.sendPositiveFeedback('posFeedback1', 'dummyStepId', 'dummyContent')
-                LOGGING_SERVICE.sendCompletedTask(score);
+                LOGGING_SERVICE.sendCompletedTask(score);**/
                 HEARTBEAT_SERVICE.stop();
             };
             
