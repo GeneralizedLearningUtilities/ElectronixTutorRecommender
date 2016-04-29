@@ -1,0 +1,396 @@
+<!-- A panel to display recommendations -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"> 
+    <title>RecommenderPanel</title>
+	<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <!-- Bootstrap -->
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+		
+        <!-- General Utilities Imports --> 
+        <script type="text/javascript" src="/js/SuperGLU/Util/emacs5-compatibility-patches.js"></script>
+        
+        <!-- SuperGLU Imports -->              
+        <script type="text/javascript" src="/js/SuperGLU/Util/uuid.js"></script>
+		<script type="text/javascript" src="/js/SuperGLU/Util/zet.js"></script>
+		<script type="text/javascript" src="/js/SuperGLU/super-glu.js"></script>
+		<script type="text/javascript" src="/js/SuperGLU/Util/serialization.js"></script>
+		<script type="text/javascript" src="/js/SuperGLU/Core/messaging.js"></script>
+		<script type="text/javascript" src="/js/SuperGLU/Core/messaging-gateway.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.1.0/socket.io.min.js"></script>
+        
+        <!-- SuperGLU Services --> 
+		<script type="text/javascript" src="/js/SuperGLU/Services/Logging/standard-its-logging.js"></script>
+        
+        <!-- Reference-Implementation Data --> 
+		<script type="text/javascript" src="/js/reference-data.js"></script>
+
+    <style type="text/css">
+      body {
+        background: #140f3a;
+        color: black;
+      }
+
+      .wrapper {
+        position: fixed;
+        overflow: hidden;
+        height: 100%;
+        display: table;
+        width: 100%;
+        text-align: center;
+      }
+
+      .header {
+        display: table-row;
+        height: 200px;
+        background: #8c86bc;
+      }
+
+      .main {
+        height: 100%;
+        display: table;
+        width: 100%;
+      }
+
+      .box {
+        display: table-cell;
+      }
+
+      .box-content {
+        background: black;
+        color: black;
+        vertical-align:middle;
+      }
+
+      .sidebar {
+        width: 450px;
+        /*background:  #140f3a;*/
+        position: relative;
+        z-index: 2;
+      }
+
+      .footer {
+        display: table-row;
+        width: 100%;
+        height:1px;
+        color: white;
+      }
+
+      .header-contents {
+        width: 100%;
+        height: 100%;
+        display: table;
+      }
+
+      .header-box {
+        display: table-cell;
+        text-align: center;
+        vertical-align:middle;
+        /*line-height: 13em;*/
+      }
+
+      .options-box {
+        display: table-cell;
+        vertical-align:middle;
+        float: right;
+        width: 60%;
+        padding-right: 10px;
+        margin-bottom: 5px;
+        /*line-height: 13em;*/
+      }
+
+      #logo {
+        width: 450px;
+        min-width: 450px;
+        background-color: #8c86bc;
+      }
+
+      #title {
+        width: 900px;
+        background-color: #8c86bc;
+      }
+
+      #recommended-probs {
+        background-color:  #746caf;
+        margin-bottom: 10px;
+        text-align: left;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        padding-right: 10px;
+      }
+
+      #assignments {
+        z-index: 5;
+        background-color:  #746caf;
+        font-size: 32px;
+      }
+
+      #options{1
+        z-index: 2;
+        position: relative;
+        background-color: #8c86bc;
+      }
+
+      #problem-header {
+        position: relative;
+        z-index: 5;
+        padding-left: 20px;
+        width: 100%;
+        height: 75px;
+        line-height: 75px;
+        font-size: 24px;
+        margin-bottom: 7px;
+        background-color: #dddfe4;
+      }
+
+      .problems {
+        position: relative;
+        z-index: 5;
+        padding-left: 20px;
+        width: 100%;
+        font-size: 18px;
+        margin-bottom: 7px;
+        background-color: #dddfe4; 
+      }
+
+      .problems:hover {
+        background-color:grey;
+        cursor: pointer;
+      }
+
+      #globe {
+        z-index: 1;
+        position: absolute;
+        left: 0;
+      }
+
+      #bevel {
+        z-index: 0;
+        position: fixed;
+        top: -400;
+        right: 0;
+      }
+
+      #folder {
+        z-index: -1;
+        position: fixed;
+        right: 0;
+      }
+
+      #logoimage {
+        width: 100%;
+        z-index: 2;
+      }
+
+      #logo-container {
+        z-index: 2;
+        position: relative;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background-color: #746caf;
+      }
+      #electronix-logo {
+        z-index: 2;
+        position: relative;
+        width: 70%;
+      }
+
+      #assistFrame {
+        z-index: 5;
+        position: fixed;
+        padding-right: 8%;
+        right: 0
+      }
+
+      /*====== Ignore section below ======*/
+
+      /* Basic Style*/
+      * { margin:0; padding:0;}
+      html, body { height: 100%; }
+      /*button { padding: 5px 10px;position:fixed;bottom: 50px;right:0px;left:0px;margin:auto; width: 200px; display: block; -webkit-appearance: none;background: @orange; outline: none;  border: 2px solid #DB9E36; color: @yellow; border-radius: 10px; box-shadow: 0 2px 3px rgba(0,0,0,0.5);cursor: pointer;}
+      button:active {border-color: @beige; color:@beige;}*/
+    </style>
+            
+		<script type="text/javascript">
+            var RECOMMENDED_TASKS_VERB = "RecommendedTasks";
+            // Set a window name
+            window.name = "RecommenderPanel";
+            var HTTP_MESSAGING_GATEWAY,
+                MAIN_POSTING_GATEWAY,               // A gateway for relaying messages to other gateways and services (as a tree)
+                PARENT_GATEWAY_ID = 'ETLanding',    // ID for the parent window (TODO: Grab from a URL param 'parentId')
+                PARENT_WINDOW,                      // Parent window iframe reference
+                PARENT_GATEWAY,                     // A parent window gateway stub to send HTML5 messages
+                TEST_SERVICE,                       // A test service that can send simple messages and watch for messages
+                FRAME_NAME = window.name;           // Name for the current frame;  
+
+            var REC_LIST = 'problem-list';
+            var DEFAULT_ICON = "img/icon/IconTopicGeneric.png";
+            var ICON_MAP = 
+            {"BBN" : "img/icon/BBN-Learnform-Icon.png",  
+            "AutoTutor": "img/icon/GuiResourceAutoTutor.png", 
+            "Dragoon": "img/icon/GuiResourceDragoon.png",
+            "ResourceWeb": "img/icon/GuiResourceWeb.png",
+            "RoadMap": "img/icon/IconUserRoadmap.png",
+            "Assistments": "img/icon/IconAssistments.png"}
+
+            function makeRecommederList(recs){
+                var i, x;
+                clearRecommenderList();
+                for(i=0; i<recs.length; i++){
+                    x = recs[i];
+                    addToRecommenderList(x.name, x.url, x.taskType);
+                }
+            }
+
+            function clearRecommenderList(){
+                $("#"+REC_LIST).empty();
+            };
+
+            function addToRecommenderList(name, url, taskType){
+                if (taskType in ICON_MAP){
+                  taskIcon = ICON_MAP[taskType];
+                }
+                else{
+                  taskIcon =  DEFAULT_ICON;
+                }
+
+                var $problem = $("<div>" + name + "</div>");
+                $problem.val(url);
+                $problem.addClass("problems");  
+                console.log(ICON_MAP.Assistments);
+                $problem.prepend("<img src=" + taskIcon +  " height='32px' width='32px'/>");
+                $problem.click(function(){
+                  console.log(this);
+                  window.open($(this).val());
+                });
+                $("#" + REC_LIST).append($problem);
+            } 
+            
+            Zet.declare('RecommenderPanelService', {
+                // Request recommendations & display them
+                superclass : BaseService,
+                defineBody : function(self){
+                    // Public Properties
+                    self.receiveMessage = function receiveMessage(msg){
+                        if (msg.getVerb() == StandardITSLoggingService.RECOMMENDED_TASKS_VERB){
+                            console.log(msg);
+                        };
+                        self.inherited(receiveMessage, [msg]);
+                    };
+                   
+                    self.requestRecommendations = function requestRecommendations(userId, classroomId, topic, n){
+                        var msg;
+                        if (context == null){ context={}; }
+                        if (classId != null){ 
+                            context[StandardITSLoggingService.CLASSROOM_ID_KEY] = classroomId; 
+                        }
+                        if (topic != null){ 
+                            context[StandardITSLoggingService.TOPIC_ID_KEY] = topic; 
+                        }
+                        msg = Messaging.Message(userId, StandardITSLoggingService.RECOMMENDED_TASKS_VERB, 
+                                                n, null, Messaging.REQUEST_ACT);
+                        if ((self._gateway != null) && (addGatewayContext)){
+                            msg = self._gateway.addContextDataToMsg(msg);
+                        }
+                        self._makeRequest(msg, self.handleRecommendationMessage);
+                    };
+                    
+                    self.getASSISTmentsURL = function getASSISTmentsURL(task, reps){
+                        var assistmentsItem = task.assistmentsItem;
+                        if (assistmentsItem.assignments.length > reps){
+                            return assistmentsItem.assignments[reps];
+                        } else {
+                            return null;
+                        }
+                    };
+                    
+                    self.handleRecommendationMessage = function handleRecommendationMessage(msg, oldMsg){
+                        var task, name, url, systemId, systemName;
+                        var recs = [];
+                        if (msg.getVerb() == StandardITSLoggingService.RECOMMENDED_TASKS_VERB){
+                            console.log(msg);
+                            clearRecommenderList();
+                            recs = msg.getResult();
+                        }
+                        for (var i=0; i<recs.length; i++){
+                            task = recs[i];
+                            name = task.name; // name = task.getName();
+                            url = self.getASSISTmentsURL(task);
+                            systemId = task.systemId;   // task = task.getSystemId();
+                            addToRecommenderList(name, url, systemId);
+                        }
+                    };
+                }
+            });
+    
+            /** When page loaded, set up the services. **/
+            var oldOnload = window.onload;
+            window.onload = function(){
+                if (oldOnload != null){ oldOnload(); }
+
+                var gatewayScope = {};
+                    gatewayScope[ReferenceData.REFERENCE_IMPLEMENTATION_VERSION_KEY] = ReferenceData.version;
+                    gatewayScope[ReferenceData.USER_AGENT_KEY] = navigator.userAgent;
+                
+                // Set up Services and Gateways
+                PARENT_WINDOW = parent;
+                PARENT_GATEWAY = SuperGLU.Messaging_Gateway.PostMessageGatewayStub(PARENT_GATEWAY_ID, null, null, PARENT_WINDOW);
+                TEST_SERVICE = SuperGLU.Messaging_Gateway.TestService("RecommenderTestService");
+			
+                /** Create a gateway as: GatewayId, Nodes (Gateways/Services/Stubs), Parent Gateway, Scope added to each message**/
+                MAIN_POSTING_GATEWAY = SuperGLU.Messaging_Gateway.PostMessageGateway(FRAME_NAME, 
+                    [PARENT_GATEWAY, TEST_SERVICE], 
+                    null, gatewayScope);
+                HTTP_MESSAGING_GATEWAY = Messaging_Gateway.HTTPMessagingGateway(null, [MAIN_POSTING_GATEWAY], window.location.protocol + "//" + document.domain + ':' + location.port);
+                
+                /** This Test Service is looking for a certain message. In this case, looking for "Completed"
+                    as a verb and "Inform" as the speech act (i.e., Informing that x is completed)
+                    Technically, better to subclass using Zet (examples found in messaging-gateway.js), 
+                    but this works fine too as long as you're not trying to handle anything crazy.
+                    The child frame shows an alternate example of properly subclassing the base test service.
+                **/
+                var oldReceiveMsg = TEST_SERVICE.receiveMessage;
+                TEST_SERVICE.receiveMessage = function(msg){
+                    oldReceiveMsg(msg);
+                    console.log(TEST_SERVICE.getId() + " received message.");
+                    console.log(msg);
+                };
+                
+                // Populate default recommender value(s)
+                var DEFAULT_RECS = [{'name' : 'Problem 1', 'taskType' : 'Assistments', 'url' : 'https://www.assistments.org/public_preview/link/cHJldmlldz10cnVlJmFub25BbGxvd2VkPXRydWUmd2hpdGVMYWJlbGVkPWZhbHNlJnBwdXJsVmVyPTImYXNzaWdubWVudElEPVBTNjc3ODI1Jm9uRXhpdD1odHRwczovL3d3dy5hc3Npc3RtZW50cy5vcmc='}];
+                makeRecommederList(DEFAULT_RECS);
+            };
+		</script>
+	</head>
+	<body style="width:0px;height:0px;"></body>
+</html>
+
+
+
+<html lang="en">
+  <head>
+    
+    
+    </script>
+    
+    </head>
+    <body>
+    <div id="problem-list"></div>
+    </body>
+</html>
