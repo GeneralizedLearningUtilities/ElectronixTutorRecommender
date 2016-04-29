@@ -236,7 +236,7 @@
                 PARENT_GATEWAY_ID = 'ETLanding',    // ID for the parent window (TODO: Grab from a URL param 'parentId')
                 PARENT_WINDOW,                      // Parent window iframe reference
                 PARENT_GATEWAY,                     // A parent window gateway stub to send HTML5 messages
-                TEST_SERVICE,                       // A test service that can send simple messages and watch for messages
+                REC_CLIENT_SERVICE,                 // A recommender client connection
                 FRAME_NAME = window.name;           // Name for the current frame;  
 
             var REC_LIST = 'problem-list';
@@ -284,7 +284,7 @@
             
             Zet.declare('RecommenderPanelService', {
                 // Request recommendations & display them
-                superclass : BaseService,
+                superclass : Messaging_Gateway.BaseService,
                 defineBody : function(self){
                     // Public Properties
                     self.receiveMessage = function receiveMessage(msg){
@@ -351,11 +351,11 @@
                 // Set up Services and Gateways
                 PARENT_WINDOW = parent;
                 PARENT_GATEWAY = SuperGLU.Messaging_Gateway.PostMessageGatewayStub(PARENT_GATEWAY_ID, null, null, PARENT_WINDOW);
-                TEST_SERVICE = SuperGLU.Messaging_Gateway.TestService("RecommenderTestService");
+                REC_CLIENT_SERVICE = RecommenderPanelService("RecommenderTestService");
 			
                 /** Create a gateway as: GatewayId, Nodes (Gateways/Services/Stubs), Parent Gateway, Scope added to each message**/
                 MAIN_POSTING_GATEWAY = SuperGLU.Messaging_Gateway.PostMessageGateway(FRAME_NAME, 
-                    [PARENT_GATEWAY, TEST_SERVICE], 
+                    [PARENT_GATEWAY, REC_CLIENT_SERVICE], 
                     null, gatewayScope);
                 HTTP_MESSAGING_GATEWAY = Messaging_Gateway.HTTPMessagingGateway(null, [MAIN_POSTING_GATEWAY], window.location.protocol + "//" + document.domain + ':' + location.port);
                 
@@ -375,22 +375,13 @@
                 // Populate default recommender value(s)
                 var DEFAULT_RECS = [{'name' : 'Problem 1', 'taskType' : 'Assistments', 'url' : 'https://www.assistments.org/public_preview/link/cHJldmlldz10cnVlJmFub25BbGxvd2VkPXRydWUmd2hpdGVMYWJlbGVkPWZhbHNlJnBwdXJsVmVyPTImYXNzaWdubWVudElEPVBTNjc3ODI1Jm9uRXhpdD1odHRwczovL3d3dy5hc3Npc3RtZW50cy5vcmc='}];
                 makeRecommederList(DEFAULT_RECS);
+                
+                // Request recommendations for some user
+                REC_CLIENT_SERVICE.requestRecommendations("CHUCK_RECOMMENDER");
             };
 		</script>
 	</head>
-	<body style="width:0px;height:0px;"></body>
-</html>
-
-
-
-<html lang="en">
-  <head>
-    
-    
-    </script>
-    
-    </head>
-    <body>
-    <div id="problem-list"></div>
+	<body>
+        <div id="problem-list"></div>
     </body>
 </html>
