@@ -14,7 +14,9 @@ RUN sudo apt-get -y install python-dev
 RUN sudo apt-get -y install python3-dev
 RUN sudo apt-get -y install libevent-dev
 RUN sudo apt-get install -qy python-setuptools
+RUN sudo apt-get -y install python3.4-venv
 RUN sudo easy_install pip
+RUN sudo pip install --upgrade pip
 RUN sudo pip install virtualenv
 RUN sudo pip install awscli
 

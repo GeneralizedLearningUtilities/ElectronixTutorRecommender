@@ -36,7 +36,7 @@
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.1.0/socket.io.min.js"></script>
         
         <!-- SuperGLU Services --> 
-		<script type="text/javascript" src="/js/SuperGLU/Services/Logging/standard-its-logging.js"></script>
+		<script type="text/javascript" src="/js/SuperGLU/Services/LoggingService/standard-its-logging.js"></script>
         
         <!-- Reference-Implementation Data --> 
 		<script type="text/javascript" src="/js/reference-data.js"></script>
@@ -228,7 +228,7 @@
     </style>
             
 		<script type="text/javascript">
-            var RECOMMENDED_TASKS_VERB = "RecommendedTasks";
+            var RECOMMENDED_TASKS_VERB = Standard_ITS_Logging.RECOMMENDED_TASKS_VERB;
             // Set a window name
             window.name = "RecommenderPanel";
             var HTTP_MESSAGING_GATEWAY,
@@ -240,14 +240,14 @@
                 FRAME_NAME = window.name;           // Name for the current frame;  
 
             var REC_LIST = 'problem-list';
-            var DEFAULT_ICON = "img/icon/IconTopicGeneric.png";
+            var DEFAULT_ICON = "/static/img/icon/IconTopicGeneric.png";
             var ICON_MAP = 
-            {"BBN" : "img/icon/BBN-Learnform-Icon.png",  
-            "AutoTutor": "img/icon/GuiResourceAutoTutor.png", 
-            "Dragoon": "img/icon/GuiResourceDragoon.png",
-            "ResourceWeb": "img/icon/GuiResourceWeb.png",
-            "RoadMap": "img/icon/IconUserRoadmap.png",
-            "Assistments": "img/icon/IconAssistments.png"}
+            {"BBN" : "/static/img/icon/BBN-Learnform-Icon.png",  
+            "AutoTutor": "/static/img/icon/GuiResourceAutoTutor.png", 
+            "Dragoon": "/static/img/icon/GuiResourceDragoon.png",
+            "ResourceWeb": "/static/img/icon/GuiResourceWeb.png",
+            "RoadMap": "/static/img/icon/IconUserRoadmap.png",
+            "Assistments": "/static/img/icon/IconAssistments.png"}
 
             function makeRecommederList(recs){
                 var i, x;
@@ -288,32 +288,36 @@
                 defineBody : function(self){
                     // Public Properties
                     self.receiveMessage = function receiveMessage(msg){
-                        if (msg.getVerb() == StandardITSLoggingService.RECOMMENDED_TASKS_VERB){
+                        if (msg.getVerb() == RECOMMENDED_TASKS_VERB){
                             console.log(msg);
                         };
                         self.inherited(receiveMessage, [msg]);
                     };
                    
-                    self.requestRecommendations = function requestRecommendations(userId, classroomId, topic, n){
+                    self.requestRecommendations = function requestRecommendations(userId, classroomId, topic, n, context){
                         var msg;
                         if (context == null){ context={}; }
-                        if (classId != null){ 
+                        if (classroomId != null){ 
                             context[StandardITSLoggingService.CLASSROOM_ID_KEY] = classroomId; 
                         }
                         if (topic != null){ 
                             context[StandardITSLoggingService.TOPIC_ID_KEY] = topic; 
                         }
-                        msg = Messaging.Message(userId, StandardITSLoggingService.RECOMMENDED_TASKS_VERB, 
+                        msg = Messaging.Message(userId, RECOMMENDED_TASKS_VERB, 
                                                 n, null, Messaging.REQUEST_ACT);
                         if ((self._gateway != null) && (addGatewayContext)){
                             msg = self._gateway.addContextDataToMsg(msg);
                         }
+                        console.log("SENDING");
+                        console.log(msg);
                         self._makeRequest(msg, self.handleRecommendationMessage);
                     };
                     
                     self.getASSISTmentsURL = function getASSISTmentsURL(task, reps){
                         var assistmentsItem = task.assistmentsItem;
-                        if (assistmentsItem.assignments.length > reps){
+                        if (assistmentsItem != null && 
+                            assistmentsItem.assignments != null && 
+                            assistmentsItem.assignments.length > reps){
                             return assistmentsItem.assignments[reps];
                         } else {
                             return null;
@@ -323,17 +327,19 @@
                     self.handleRecommendationMessage = function handleRecommendationMessage(msg, oldMsg){
                         var task, name, url, systemId, systemName;
                         var recs = [];
-                        if (msg.getVerb() == StandardITSLoggingService.RECOMMENDED_TASKS_VERB){
+                        if (msg.getVerb() == StandardITSLoggingService.RECOMMENDED_TASKS_VERB &&
+                            msg.getSpeechAct() == Messsaging.INFORM_ACT){
                             console.log(msg);
                             clearRecommenderList();
                             recs = msg.getResult();
-                        }
-                        for (var i=0; i<recs.length; i++){
-                            task = recs[i];
-                            name = task.name; // name = task.getName();
-                            url = self.getASSISTmentsURL(task);
-                            systemId = task.systemId;   // task = task.getSystemId();
-                            addToRecommenderList(name, url, systemId);
+                            if (recs == null){ recs = []; }
+                            for (var i=0; i<recs.length; i++){
+                                task = recs[i];
+                                name = task.name;                   // name = task.getName();
+                                url = self.getASSISTmentsURL(task);
+                                systemId = task.systemId;           // task = task.getSystemId();
+                                addToRecommenderList(name, url, systemId);
+                            }
                         }
                     };
                 }
@@ -358,19 +364,6 @@
                     [PARENT_GATEWAY, REC_CLIENT_SERVICE], 
                     null, gatewayScope);
                 HTTP_MESSAGING_GATEWAY = Messaging_Gateway.HTTPMessagingGateway(null, [MAIN_POSTING_GATEWAY], window.location.protocol + "//" + document.domain + ':' + location.port);
-                
-                /** This Test Service is looking for a certain message. In this case, looking for "Completed"
-                    as a verb and "Inform" as the speech act (i.e., Informing that x is completed)
-                    Technically, better to subclass using Zet (examples found in messaging-gateway.js), 
-                    but this works fine too as long as you're not trying to handle anything crazy.
-                    The child frame shows an alternate example of properly subclassing the base test service.
-                **/
-                var oldReceiveMsg = TEST_SERVICE.receiveMessage;
-                TEST_SERVICE.receiveMessage = function(msg){
-                    oldReceiveMsg(msg);
-                    console.log(TEST_SERVICE.getId() + " received message.");
-                    console.log(msg);
-                };
                 
                 // Populate default recommender value(s)
                 var DEFAULT_RECS = [{'name' : 'Problem 1', 'taskType' : 'Assistments', 'url' : 'https://www.assistments.org/public_preview/link/cHJldmlldz10cnVlJmFub25BbGxvd2VkPXRydWUmd2hpdGVMYWJlbGVkPWZhbHNlJnBwdXJsVmVyPTImYXNzaWdubWVudElEPVBTNjc3ODI1Jm9uRXhpdD1odHRwczovL3d3dy5hc3Npc3RtZW50cy5vcmc='}];

@@ -20,9 +20,12 @@ cd $SCRIPT_DIR
 
 # Set up a virtual environment using python3, use the new environment, and
 # install our dependencies
-virtualenv -p python3 env --always-copy
+# virtualenv -p python3 env --always-copy
+python3 -m venv env --copies
 source $SCRIPT_DIR/env/bin/activate
 #pip install --upgrade requests[security]
+pip --version
+pip install -U pip
 pip install Flask
 pip install flask-socketio==1.1
 pip install pymongo

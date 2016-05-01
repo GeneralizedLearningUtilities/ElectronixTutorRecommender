@@ -9,4 +9,4 @@ cd $SCRIPT_DIR
 # test config file. Note that the test config file IS NOT in version control
 source $SCRIPT_DIR/env/bin/activate
 export APP_CONFIG_FILE=$SCRIPT_DIR/server.config
-python $SCRIPT_DIR/application.py
+python3 $SCRIPT_DIR/application.py
