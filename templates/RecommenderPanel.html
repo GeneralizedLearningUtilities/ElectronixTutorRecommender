@@ -25,6 +25,7 @@
 		
         <!-- General Utilities Imports --> 
         <script type="text/javascript" src="/js/SuperGLU/Util/emacs5-compatibility-patches.js"></script>
+        <script type="text/javascript" src="/js/SuperGLU/Util/general-utilities.js"></script>
         
         <!-- SuperGLU Imports -->              
         <script type="text/javascript" src="/js/SuperGLU/Util/uuid.js"></script>
@@ -237,7 +238,9 @@
                 PARENT_WINDOW,                      // Parent window iframe reference
                 PARENT_GATEWAY,                     // A parent window gateway stub to send HTML5 messages
                 REC_CLIENT_SERVICE,                 // A recommender client connection
-                FRAME_NAME = window.name;           // Name for the current frame;  
+                FRAME_NAME = window.name,           // Name for the current frame
+                USER_ID = getParameterByName('p1'), // ID to use for the recommender session
+                CLASS_ID = getParameterByName('p2');// Class ID for this recommender session
 
             var REC_LIST = 'problem-list';
             var DEFAULT_ICON = "/static/img/icon/IconTopicGeneric.png";
@@ -298,13 +301,13 @@
                         var msg;
                         if (context == null){ context={}; }
                         if (classroomId != null){ 
-                            context[StandardITSLoggingService.CLASSROOM_ID_KEY] = classroomId; 
+                            context[Standard_ITS_Logging.CLASSROOM_ID_KEY] = classroomId; 
                         }
                         if (topic != null){ 
-                            context[StandardITSLoggingService.TOPIC_ID_KEY] = topic; 
+                            context[Standard_ITS_Logging.TOPIC_ID_KEY] = topic; 
                         }
                         msg = Messaging.Message(userId, RECOMMENDED_TASKS_VERB, 
-                                                n, null, Messaging.REQUEST_ACT);
+                                                n, null, Messaging.REQUEST_ACT, context);
                         if ((self._gateway != null) && (addGatewayContext)){
                             msg = self._gateway.addContextDataToMsg(msg);
                         }
@@ -371,7 +374,7 @@
                 makeRecommederList(DEFAULT_RECS);
                 
                 // Request recommendations for some user
-                REC_CLIENT_SERVICE.requestRecommendations("CHUCK_RECOMMENDER");
+                REC_CLIENT_SERVICE.requestRecommendations(USER_ID, CLASS_ID, null, 3);
             };
 		</script>
 	</head>
