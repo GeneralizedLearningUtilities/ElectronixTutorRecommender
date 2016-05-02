@@ -76,7 +76,8 @@ application.register_blueprint(BASIC_BLUEPRINT)
 SOCKET_IO_CORE = flask.ext.socketio.SocketIO(application)
 
 #Allow some env specification of helpful test services
-services = [DBLoggingService(), StudentModelMessaging(), GLUDBStorageService(), CSVReader(), RecommenderMessaging()]
+services = [DBLoggingService(), StudentModelMessaging(), GLUDBStorageService(),
+            CSVReader(), RecommenderMessaging()]
 
 MESSAGING_GATEWAY = HTTPMessagingGateway(
         None,
