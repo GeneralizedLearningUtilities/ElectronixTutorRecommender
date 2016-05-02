@@ -327,8 +327,9 @@
                     self.handleRecommendationMessage = function handleRecommendationMessage(msg, oldMsg){
                         var task, name, url, systemId, systemName;
                         var recs = [];
-                        if (msg.getVerb() == StandardITSLoggingService.RECOMMENDED_TASKS_VERB &&
-                            msg.getSpeechAct() == Messsaging.INFORM_ACT){
+                        if (msg.getVerb() == RECOMMENDED_TASKS_VERB &&
+                            msg.getSpeechAct() == Messaging.INFORM_ACT){
+                            console.log("GOT THE MESSAGE!");
                             console.log(msg);
                             clearRecommenderList();
                             recs = msg.getResult();
