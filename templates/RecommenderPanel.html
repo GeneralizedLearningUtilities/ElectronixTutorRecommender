@@ -10,7 +10,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <!-- Bootstrap -->
-        <!-- Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -44,88 +43,16 @@
 		<script type="text/javascript" src="/js/reference-data.js"></script>
 
     <style type="text/css">
-      body {
-        background: #140f3a;
-        color: black;
-      }
-
-      .wrapper {
-        position: fixed;
-        overflow: hidden;
+      html, body  {
+        margin: 0px;
+        padding: 0px;
+        border: 0px;
+        width: 100%;
+        min-height: 100%
         height: 100%;
-        display: table;
-        width: 100%;
-        text-align: center;
-      }
-
-      .header {
-        display: table-row;
-        height: 200px;
-        background: #8c86bc;
-      }
-
-      .main {
-        height: 100%;
-        display: table;
-        width: 100%;
-      }
-
-      .box {
-        display: table-cell;
-      }
-
-      .box-content {
-        background: black;
-        color: black;
-        vertical-align:middle;
-      }
-
-      .sidebar {
-        width: 450px;
-        /*background:  #140f3a;*/
-        position: relative;
-        z-index: 2;
-      }
-
-      .footer {
-        display: table-row;
-        width: 100%;
-        height:1px;
-        color: white;
-      }
-
-      .header-contents {
-        width: 100%;
-        height: 100%;
-        display: table;
-      }
-
-      .header-box {
-        display: table-cell;
-        text-align: center;
-        vertical-align:middle;
-        /*line-height: 13em;*/
-      }
-
-      .options-box {
-        display: table-cell;
-        vertical-align:middle;
-        float: right;
-        width: 60%;
-        padding-right: 10px;
-        margin-bottom: 5px;
-        /*line-height: 13em;*/
-      }
-
-      #logo {
-        width: 450px;
-        min-width: 450px;
-        background-color: #8c86bc;
-      }
-
-      #title {
-        width: 900px;
-        background-color: #8c86bc;
+        background-color:  #746caf;
+        overflow: auto;
+        overflow-y: auto;
       }
 
       #recommended-probs {
@@ -136,37 +63,15 @@
         padding-top: 10px;
         padding-right: 10px;
       }
-
-      #assignments {
-        z-index: 5;
-        background-color:  #746caf;
-        font-size: 32px;
-      }
-
-      #options{1
-        z-index: 2;
-        position: relative;
-        background-color: #8c86bc;
-      }
-
-      #problem-header {
-        position: relative;
-        z-index: 5;
-        padding-left: 20px;
-        width: 100%;
-        height: 75px;
-        line-height: 75px;
-        font-size: 24px;
-        margin-bottom: 7px;
-        background-color: #dddfe4;
-      }
-
+      
       .problems {
         position: relative;
         z-index: 5;
         padding-left: 20px;
         width: 100%;
         font-size: 18px;
+        padding-bottom: 4px;
+        padding-top: 4px;
         margin-bottom: 7px;
         background-color: #dddfe4; 
       }
@@ -176,50 +81,14 @@
         cursor: pointer;
       }
 
-      #globe {
-        z-index: 1;
+      .RecIcon{ 
+        height: 36px;
+        width: 36px;
+        background-color: #000040;
         position: absolute;
-        left: 0;
-      }
-
-      #bevel {
-        z-index: 0;
-        position: fixed;
-        top: -400;
-        right: 0;
-      }
-
-      #folder {
-        z-index: -1;
-        position: fixed;
-        right: 0;
-      }
-
-      #logoimage {
-        width: 100%;
-        z-index: 2;
-      }
-
-      #logo-container {
-        z-index: 2;
-        position: relative;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        background-color: #746caf;
-      }
-      #electronix-logo {
-        z-index: 2;
-        position: relative;
-        width: 70%;
-      }
-
-      #assistFrame {
-        z-index: 5;
-        position: fixed;
-        padding-right: 8%;
-        right: 0
-      }
-
+        top: 50%; 
+        transform: translateY(-50%);
+       }
       /*====== Ignore section below ======*/
 
       /* Basic Style*/
@@ -269,15 +138,13 @@
             function addToRecommenderList(name, url, taskType){
                 if (taskType in ICON_MAP){
                   taskIcon = ICON_MAP[taskType];
-                } else{
+                } else {
                   taskIcon =  DEFAULT_ICON;
                 }
-
-                var $problem = $("<div>" + name + "</div>");
+                var $problem = $("<div><div style='margin-left:42px;'>" + name + "</div></div>");
                 $problem.val(url);
-                $problem.addClass("problems");  
-                console.log(ICON_MAP.Assistments);
-                $problem.prepend("<img src=" + taskIcon +  " height='36px' width='36px' style='background-color:#000040;'/>");
+                $problem.addClass("problems");
+                $problem.prepend("<img class='RecIcon' src=" + taskIcon + "/>");
                 $problem.click(function(){
                   console.log(this);
                   window.open($(this).val());

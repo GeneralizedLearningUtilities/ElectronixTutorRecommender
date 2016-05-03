@@ -8,12 +8,11 @@
     <title>Electronix Tutor</title>
 
     <!-- Bootstrap -->
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/js/bootstrap/bootstrap.min.js"></script>
-
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -22,14 +21,17 @@
     <![endif]-->
 
     <style type="text/css">
-      body {
+      html{
+        height: 100%;
+      }
+      body{
+        height: 100%;
         background: #140f3a;
         color: black;
       }
-
+      
       .wrapper {
         position: fixed;
-        overflow: hidden;
         height: 100%;
         display: table;
         width: 100%;
@@ -38,12 +40,18 @@
 
       .header {
         display: table-row;
+        width: 100%;
         height: 200px;
         background: #8c86bc;
+        position: absolute;
+        top: 0;
       }
 
       .main {
-        height: 100%;
+        position: absolute;
+        top: 250px;
+        bottom: 0px;
+        right: 0;
         display: table;
         width: 100%;
       }
@@ -56,12 +64,15 @@
         background: black;
         color: black;
         vertical-align:middle;
+        float: right;
+        width: 75%;
+        height: 100%;
       }
 
       .sidebar {
-        width: 450px;
+        float: left;
+        width: 25%;
         /*background:  #140f3a;*/
-        position: relative;
         z-index: 2;
       }
 
@@ -71,28 +82,17 @@
         height:1px;
         color: white;
       }
-
-      .header-contents {
-        width: 100%;
-        height: 100%;
-        display: table;
-      }
-
       .header-box {
         display: table-cell;
         text-align: center;
         vertical-align:middle;
         /*line-height: 13em;*/
       }
-
-      .options-box {
-        display: table-cell;
-        vertical-align:middle;
-        float: right;
-        width: 60%;
-        padding-right: 10px;
-        margin-bottom: 5px;
-        /*line-height: 13em;*/
+      
+      .header-contents {
+        width: 100%;
+        height: 100%;
+        display: table;
       }
 
       #logo {
@@ -105,38 +105,72 @@
         width: 900px;
         background-color: #8c86bc;
       }
-
-      #recommended-probs {
-        background-color:  #746caf;
-        margin-bottom: 10px;
-        text-align: left;
-        padding-bottom: 10px;
-        padding-top: 10px;
-        padding-right: 10px;
-      }
-
-      #assignments {
-        z-index: 5;
-        background-color:  #746caf;
-        font-size: 32px;
-      }
-
-      #options{1
+      #options{
         z-index: 2;
         position: relative;
         background-color: #8c86bc;
       }
-
+      
+      .options-box {
+        display: table-cell;
+        vertical-align:middle;
+        float: right;
+        width: 60%;
+        padding-right: 10px;
+        margin-bottom: 5px;
+        /*line-height: 13em;*/
+      }
+     
+      #recommended-probs {
+        background-color:  #746caf;
+        margin-bottom: 10px;
+        text-align: left;
+        padding-bottom: 25px;
+        padding-top: 10px;
+        padding-right: 10px;
+        height: 80%;
+        min-height: 300px;
+      }
+      
       #problem-header {
         position: relative;
         z-index: 5;
-        padding-left: 20px;
         width: 100%;
-        height: 75px;
+        height: 15%
+        min-height: 75px;
         line-height: 75px;
         font-size: 24px;
+        padding-left: 20px;
         margin-bottom: 7px;
         background-color: #dddfe4;
+      }
+      
+      #assignment-header {
+        position: relative;
+        z-index: 5;
+        width: 100%;
+        height: 15%
+        min-height: 75px;
+        line-height: 75px;
+        font-size: 24px;
+        padding-left: 20px;
+        margin-bottom: 7px;
+        background-color: #dddfe4;
+      }
+      
+      #problem-list{
+        position: relative;
+        min-height:200px; 
+        height:35%;
+        width:100%;
+        z-index: 6;
+      }
+
+      #assignment-list{
+        position: relative;
+        min-height:200px; 
+        height:35%; 
+        width:100%;
       }
 
       .problems {
@@ -192,10 +226,35 @@
       }
 
       #assistFrame {
+        z-index: 10;
+        position: relative;
+        min-height: 100%;
+        max-height: 100%;
+        height: 100%;
+        width: 100%;
+      }
+
+      .padding-box{
+        clear: both;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding: 25px;
+      }
+      
+      iframe{
+        margin: none;
+        padding: none;
+        border: none;
         z-index: 5;
-        position: fixed;
-        padding-right: 8%;
-        right: 0
+      }
+      
+      #recFrame{
+        height: 100%;
+        min-height: 100%;
+        width:100%;
+        min-width: 100%;
+        z-index: 10;
       }
 
       /*====== Ignore section below ======*/
@@ -209,18 +268,63 @@
     </style>
     
     <script text="text/javascript">
-    var CONTENT_FRAME = "assistFrame";
-    
-    var setContentFrameURL = function setContentFrameURL(url){
-        $("#" + CONTENT_FRAME).attr("src", url);
-    };
-    </script>
+        var ICON_DEFAULT = "/static/img/icon/IconTopicGeneric.png";
+        var ICON_MAP = 
+        {"BBN" : "/static/img/icon/BBN-Learnform-Icon.png",  
+        "AutoTutor": "/static/img/icon/GuiResourceAutoTutor.png", 
+        "Dragoon": "/static/img/icon/GuiResourceDragoon.png",
+        "ResourceWeb": "/static/img/icon/GuiResourceWeb.png",
+        "RoadMap": "/static/img/icon/IconUserRoadmap.png",
+        "Assistments": "/static/img/icon/IconAssistments.png"}
 
+        var CONTENT_FRAME = "assistFrame";
+        var setContentFrameURL = function setContentFrameURL(url){
+            $("#" + CONTENT_FRAME).attr("src", url);
+        };
+        
+        function fitContentToParent(frameId) {
+            var frame = $("#" + frameId),
+                parent = frame.parent(),
+                height = parent.height();
+            frame.height(height);
+            parent.height(height);
+        }
+           
+        $(document).ready(function () {
+            addToAssignmentList("Diodes", "https://www.assistments.org/public_preview/link/cHJldmlldz10cnVlJmFub25BbGxvd2VkPXRydWUmd2hpdGVMYWJlbGVkPWZhbHNlJnBwdXJsVmVyPTImYXNzaWdubWVudElEPVBTNjc3ODI5Jm9uRXhpdD1odHRwczovL3d3dy5hc3Npc3RtZW50cy5vcmc=", "Assistments");
+            addToAssignmentList("Transistors", "https://www.assistments.org/public_preview/link/cHJldmlldz10cnVlJmFub25BbGxvd2VkPXRydWUmd2hpdGVMYWJlbGVkPWZhbHNlJnBwdXJsVmVyPTImYXNzaWdubWVudElEPVBTNjc4NjEzJm9uRXhpdD1odHRwczovL3d3dy5hc3Npc3RtZW50cy5vcmc=", "Assistments");
+            fitContentToParent("recFrame");
+            fitContentToParent("logoimage");
+            fitContentToParent("electronix-logo");
+            fitContentToParent("mainContentBox");
+            fitContentToParent("contentContainer");
+            fitContentToParent("assistFrame");
+          });
+
+        function addToAssignmentList(name, url, taskType){
+            if (taskType in ICON_MAP){
+              taskIcon = ICON_MAP[taskType];
+            }
+            else{
+              taskIcon =  DEFAULT_ICON;
+            }
+
+            var $problem = $("<div>" + name + "</div>");
+            $problem.val(url);
+            $problem.addClass("problems");  
+            console.log(ICON_MAP.Assistments);
+            $problem.prepend("<img src=" + taskIcon +  " height='32px' width='32px'/>");
+            $problem.click(function(){
+              console.log(this);
+              $("#assistFrame").attr("src", $(this).val());
+            });
+            $("#assignment-list").append($problem);
+      } 
+  </script>    
   </head>
+
   <body>
-
   <!-- Starts Here -->
-
   <div class="wrapper">
     <!-- <img id="folder" src="/static/img/folder.png"/> -->
     <img id="globe" src="/static/img/globe.png"/>
@@ -228,108 +332,36 @@
       <div class="header-contents">
         <div class="header-box" id="logo"> 
           <div id="logo-container">
-            <img id = "logoimage" src="/static/img/logos.png"/>
+            <img id ="logoimage" class="headerimg" src="/static/img/logos.png" height="100%"/>
           </div>
         </div>
-        <div class="header-box" id="title"> <img id="electronix-logo" src="/static/img/electronix.png"/></div>
+        <div class="header-box" id="title"> 
+            <img id="electronix-logo" class="headerimg" src="/static/img/electronix.png" height="100%"/>
+        </div>
         <div class="header-box" id="options">
-          
         </div>
       </div>
     </div>
     <div class="main">
       <div class="box sidebar" id="left-sidebar">
         <div id="recommended-probs">
-          <div id="problem-header">Recommended Problems</div>
-          <div id="problem-list"></div>
+            <div id="problem-header">Recommended Problems</div>
+            <div id="problem-list">
+                <iframe id="recFrame" src="/RecommenderPanel.html?p1=ChuckRecommender&p2=Classy"></iframe>
+            </div>
+            <div id="assignment-header">Assignments</div>
+            <div id="assignment-list"></div>
         </div>
-        <div id="assignments"> <b>ASSIGNMENTS</b> </div>
+        <div class="padding-box"></div>
       </div>
-      <div class="box-content">
-           <iframe src="https://www.assistments.org/public_preview/link/cHJldmlldz10cnVlJmFub25BbGxvd2VkPXRydWUmd2hpdGVMYWJlbGVkPWZhbHNlJnBwdXJsVmVyPTImYXNzaWdubWVudElEPVBTNjc3ODI1Jm9uRXhpdD1odHRwczovL3d3dy5hc3Npc3RtZW50cy5vcmc=" style="border:0px #FFFFFF none;" id="assistFrame" scrolling="yes" frameborder="1" marginheight="10px" marginwidth="0px" height="70%" width="70%"></iframe>
+      
+      <div id="mainContentBox" class="box-content">
+        <div id="contentContainer" class="padding-box" height="100%">
+           <iframe src="http://www.assistmentsdirect.org/assignment/5e8e6df43e2c9e012b933835d39bcdd9" style="border:0px #FFFFFF none;" id="assistFrame" scrolling="no" frameborder="1" marginwidth="0px" height="100%" width="100%"></iframe>
+        </div>           
       </div>
     </div>
-    <div class="footer">Legal/About information + links can go here!</div>
+    <div class="footer">ElectronixTutor Demo Project (UM, USC, WPI, ASU, BBN, UMass)</div>
   </div>
-
-  <script type="text/javascript">
-
-    var ICON_DEFAULT = "/static/img/icon/IconTopicGeneric.png";
-
-    var ICON_MAP = 
-    {"BBN" : "/static/img/icon/BBN-Learnform-Icon.png",  
-    "AutoTutor": "/static/img/icon/GuiResourceAutoTutor.png", 
-    "Dragoon": "/static/img/icon/GuiResourceDragoon.png",
-    "ResourceWeb": "/static/img/icon/GuiResourceWeb.png",
-    "RoadMap": "/static/img/icon/IconUserRoadmap.png",
-    "Assistments": "/static/img/icon/IconAssistments.png"}
-
-    $(document).ready(function () {
-      /*
-      problemlist = ["Capacitors", "Resistors", "Example Text 3", "Example Text 4", "Example Text 5"];
-      problemUrl = 
-      ["https://www.assistments.org/public_preview/link/cHJldmlldz10cnVlJmFub25BbGxvd2VkPXRydWUmd2hpdGVMYWJlbGVkPWZhbHNlJnBwdXJsVmVyPTImYXNzaWdubWVudElEPVBTNjc3ODI1Jm9uRXhpdD1odHRwczovL3d3dy5hc3Npc3RtZW50cy5vcmc=", 
-      "https://www.assistments.org/public_preview/link/cHJldmlldz10cnVlJmFub25BbGxvd2VkPXRydWUmd2hpdGVMYWJlbGVkPWZhbHNlJnBwdXJsVmVyPTImYXNzaWdubWVudElEPVBTNjc2MzI2Jm9uRXhpdD1odHRwczovL3d3dy5hc3Npc3RtZW50cy5vcmc=", 
-      "https://www.assistments.org/public_preview/link/cHJldmlldz10cnVlJmFub25BbGxvd2VkPXRydWUmd2hpdGVMYWJlbGVkPWZhbHNlJnBwdXJsVmVyPTImYXNzaWdubWVudElEPVBTNjc3ODI5Jm9uRXhpdD1odHRwczovL3d3dy5hc3Npc3RtZW50cy5vcmc=", 
-      "https://www.assistments.org/public_preview/link/cHJldmlldz10cnVlJmFub25BbGxvd2VkPXRydWUmd2hpdGVMYWJlbGVkPWZhbHNlJnBwdXJsVmVyPTImYXNzaWdubWVudElEPVBTNjc3ODI5Jm9uRXhpdD1odHRwczovL3d3dy5hc3Npc3RtZW50cy5vcmc=", 
-      "https://www.assistments.org/public_preview/link/cHJldmlldz10cnVlJmFub25BbGxvd2VkPXRydWUmd2hpdGVMYWJlbGVkPWZhbHNlJnBwdXJsVmVyPTImYXNzaWdubWVudElEPVBTNjc3ODI5Jm9uRXhpdD1odHRwczovL3d3dy5hc3Npc3RtZW50cy5vcmc=",]
-      for(var i = 0; i < problemlist.length; i++){
-        var $problem = $("<div>Problem " + (i+1) + ": " + problemlist[i] + "</div>");
-        $problem.val(problemUrl[i]);
-        $problem.addClass("problems");  
-        console.log(ICON_MAP.Assistments);
-        $problem.prepend("<img src=" + ICON_MAP.Assistments +  " height='32px' width='32px'/>");
-        $problem.click(function(){
-          console.log(this);
-          $("#assistFrame").attr("src", $(this).val());
-        });
-        $("#problem-list").append($problem);
-        */
-        addToRecommenderList("Problem 1", "https://www.assistments.org/public_preview/link/cHJldmlldz10cnVlJmFub25BbGxvd2VkPXRydWUmd2hpdGVMYWJlbGVkPWZhbHNlJnBwdXJsVmVyPTImYXNzaWdubWVudElEPVBTNjc3ODI1Jm9uRXhpdD1odHRwczovL3d3dy5hc3Npc3RtZW50cy5vcmc=", "Assistments");
-      });
-
-
-    function makeRecommederList(recs){
-       clearRecommenderList();
-       for(var x in recs){
-          addToRecommenderList(x.name, x.url, x.taskType);
-        }
-    }
-
-    function addToRecommenderList(name, url, taskType){
-        if (taskType in ICON_MAP){
-          taskIcon = ICON_MAP[taskType];
-        } else {
-          taskIcon =  DEFAULT_ICON;
-        }
-
-        var $problem = $("<div>" + name + "</div>");
-        $problem.val(url);
-        $problem.addClass("problems");  
-        console.log(ICON_MAP.Assistments);
-        $problem.prepend("<img src=" + taskIcon +  " height='32px' width='32px'/>");
-        $problem.click(function(){
-          console.log(this);
-          $("#assistFrame").attr("src", $(this).val());
-        });
-        $("#problem-list").append($problem);
-    } 
-
-  
-
-  </script>
-
-  <!-- <div id="left">
-    <div id="logo">LOGO</div>
-    <div id="problems"></div>
-    <div id="assignments"></div>
-  </div>
-
-  <div id="right">
-     <div id="title"></div>
-     <div id="options"></div>
-     <div id="calendar"></div>
-  </div> -->
-
   </body>
 </html>
