@@ -20,7 +20,10 @@ from Blueprints import BASIC_BLUEPRINT
 from SuperGLU.Core.MessagingGateway import HTTPMessagingGateway
 from SuperGLU.Core.Messaging import Message
 from SuperGLU.Core.MessagingDB import DBLoggedMessage
-from SuperGLU.Services.StudentModel.PersistentData import initDerivedDataTables
+from SuperGLU.Services.StudentModel.PersistentData import initDerivedDataTables,\
+    DBSystem, DBTask, DBTopic, DBSession, DBStudent, DBClass, DBStudentModel,\
+    DBClassModel, DBStudentAlias, DBClasssAlias, DBKCTaskAssociations,\
+    DBAssistmentsItem
 from SuperGLU.Services.LoggingService.LoggingService import (CSVLoggingService,
     DBLoggingService, IncomingMessage)
 from SuperGLU.Services.StudentModel.StudentModel import StudentModelMessaging
@@ -155,6 +158,18 @@ def before_first():
     # Make sure we have our tables
     IncomingMessage.ensure_table()
     DBLoggedMessage.ensure_table()
+    DBSystem.ensure_table()
+    DBTask.ensure_table()
+    DBTopic.ensure_table()
+    DBSession.ensure_table()
+    DBStudent.ensure_table()
+    DBClass.ensure_table()
+    DBStudentModel.ensure_table()
+    DBClassModel.ensure_table()
+    DBStudentAlias.ensure_table()
+    DBClasssAlias.ensure_table()
+    DBKCTaskAssociations.ensure_table()
+    DBAssistmentsItem.ensure_table()
     initDerivedDataTables()
     #Transcript.ensure_table()
     #Taxonomy.ensure_table()
