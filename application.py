@@ -103,11 +103,11 @@ def background_thread():
     try:
         MESSAGING_GATEWAY.processQueuedMessages()
     except Exception as err:
-        if DEBUG_MODE:
-            raise
-        else:
-            logError(err, stack=traceback.format_exc())
-            MESSAGING_GATEWAY.processQueuedMessages()
+        #if DEBUG_MODE:
+        #    raise
+        #else:
+        logError(err, stack=traceback.format_exc())
+        MESSAGING_GATEWAY.processQueuedMessages()
 
             
 def StartServer(app=None, socketio=None, host=None, port=DEFAULT_PORT, debug=True):
