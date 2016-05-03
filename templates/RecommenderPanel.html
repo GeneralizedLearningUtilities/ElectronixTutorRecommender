@@ -38,6 +38,7 @@
         
         <!-- SuperGLU Services --> 
 		<script type="text/javascript" src="/js/SuperGLU/Services/LoggingService/standard-its-logging.js"></script>
+		<script type="text/javascript" src="/js/SuperGLU/Services/StudentModel/learning-task.js"></script>
         
         <!-- Reference-Implementation Data --> 
 		<script type="text/javascript" src="/js/reference-data.js"></script>
@@ -268,8 +269,7 @@
             function addToRecommenderList(name, url, taskType){
                 if (taskType in ICON_MAP){
                   taskIcon = ICON_MAP[taskType];
-                }
-                else{
+                } else{
                   taskIcon =  DEFAULT_ICON;
                 }
 
@@ -277,7 +277,7 @@
                 $problem.val(url);
                 $problem.addClass("problems");  
                 console.log(ICON_MAP.Assistments);
-                $problem.prepend("<img src=" + taskIcon +  " height='32px' width='32px'/>");
+                $problem.prepend("<img src=" + taskIcon +  " height='36px' width='36px' style='background-color:#000040;'/>");
                 $problem.click(function(){
                   console.log(this);
                   window.open($(this).val());
@@ -316,19 +316,17 @@
                         self._makeRequest(msg, self.handleRecommendationMessage);
                     };
                     
-                    self.getASSISTmentsURL = function getASSISTmentsURL(task, reps){
-                        var assistmentsItem = task.assistmentsItem;
-                        if (assistmentsItem != null && 
-                            assistmentsItem.assignments != null && 
-                            assistmentsItem.assignments.length > reps){
-                            return assistmentsItem.assignments[reps];
+                    self.getASSISTmentsURL = function getASSISTmentsURL(task){
+                        var assistmentsItem = task._assistmentsItem;
+                        if (assistmentsItem != null){
+                            return assistmentsItem.getActiveAssignmentURL();
                         } else {
                             return null;
                         }
                     };
                     
                     self.handleRecommendationMessage = function handleRecommendationMessage(msg, oldMsg){
-                        var task, name, url, systemId, systemName;
+                        var task, name, url, systemId;
                         var recs = [];
                         if (msg.getVerb() == RECOMMENDED_TASKS_VERB &&
                             msg.getSpeechAct() == Messaging.INFORM_ACT){
@@ -339,10 +337,14 @@
                             if (recs == null){ recs = []; }
                             for (var i=0; i<recs.length; i++){
                                 task = recs[i];
-                                name = task.name;                   // name = task.getName();
+                                console.log(task);
+                                name = task._name;
                                 url = self.getASSISTmentsURL(task);
-                                systemId = task.systemId;           // task = task.getSystemId();
+                                systemId = task._system;
                                 addToRecommenderList(name, url, systemId);
+                                console.log(name);
+                                console.log(url);
+                                console.log(systemId);
                             }
                         }
                     };
