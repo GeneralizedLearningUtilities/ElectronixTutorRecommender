@@ -120,16 +120,17 @@
             console.log(window.location);
             console.log(USER_ID);
             console.log(CLASS_ID);
-            if (USER_ID == null){
+            if (USER_ID == null || USER_ID == ''){
                 USER_ID = localStorage.getItem("RECOMMENDER_USER_ID");
             } else {
                 localStorage.setItem("RECOMMENDER_USER_ID", USER_ID);
             }
-            if (CLASS_ID != null){
+            if (CLASS_ID == null || CLASS_ID == ''){
                 CLASS_ID = localStorage.getItem("RECOMMENDER_CLASS_ID");
             } else {
                 localStorage.setItem("RECOMMENDER_CLASS_ID", CLASS_ID);
             }
+            console.log(localStorage);
             if (POLLING_RECS == "1"){
                 POLLING_RECS = true;
             } else {
@@ -167,10 +168,12 @@
             }
             
             function pollRecommenderAndUserId(){
-                if (localStorage.getItem("RECOMMENDER_USER_ID") != null){
+                if (localStorage.getItem("RECOMMENDER_USER_ID") != null && 
+                    localStorage.getItem("RECOMMENDER_USER_ID") != ''){
                     USER_ID = localStorage.getItem("RECOMMENDER_USER_ID");
                 }
-                if (localStorage.getItem("RECOMMENDER_CLASS_ID") != null){
+                if (localStorage.getItem("RECOMMENDER_CLASS_ID") != null && 
+                    localStorage.getItem("RECOMMENDER_CLASS_ID") != ''){
                     CLASS_ID = localStorage.getItem("RECOMMENDER_CLASS_ID");
                 }
                 REC_CLIENT_SERVICE.requestRecommendations(USER_ID, CLASS_ID, null, 3);
