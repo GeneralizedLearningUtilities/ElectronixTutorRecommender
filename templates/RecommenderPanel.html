@@ -121,17 +121,32 @@
             console.log(USER_ID);
             console.log(CLASS_ID);
             console.log(localStorage);
+            var usrCookieVal = null,
+                clsCookieVal = null;
             if (USER_ID == null || USER_ID == ''){
                 USER_ID = localStorage.getItem("RECOMMENDER_USER_ID");
-            } else {
+                if (USER_ID == null || USER_ID == ''){
+                    usrCookieVal = document.cookie.replace(/(?:(?:^|.*;\s*)RECOMMENDER_USER_ID\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+                    console.log(usrCookieVal);
+                }
+            }
+            if (!(USER_ID == null || USER_ID == '')){
                 localStorage.setItem("RECOMMENDER_USER_ID", USER_ID);
+                document.cookie = "RECOMMENDER_USER_ID="+ USER_ID;
             }
             if (CLASS_ID == null || CLASS_ID == ''){
                 CLASS_ID = localStorage.getItem("RECOMMENDER_CLASS_ID");
-            } else {
+                if (CLASS_ID == null || CLASS_ID == ''){
+                    clsCookieVal = document.cookie.replace(/(?:(?:^|.*;\s*)RECOMMENDER_CLASS_ID\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+                    console.log(clsCookieVal);
+                }
+            }
+            if (!(CLASS_ID == null || CLASS_ID == '')){
                 localStorage.setItem("RECOMMENDER_CLASS_ID", CLASS_ID);
+                document.cookie = "RECOMMENDER_CLASS_ID="+ CLASS_ID;
             }
             console.log(localStorage);
+            console.log(document.cookie);
             if (POLLING_RECS == "1"){
                 POLLING_RECS = true;
             } else {
@@ -205,8 +220,8 @@
                 $problem.prepend("<img class='RecIcon' src=" + taskIcon + "/>");
                 $problem.click(function(){
                   console.log(this);
-                  // window.open($(this).val());
-                  $("#assistFrame", window.parent.document).attr("src", $(this).val());
+                  window.open($(this).val());
+                  // $("#assistFrame", window.parent.document).attr("src", $(this).val());
                 });
                 $("#" + REC_LIST).append($problem);
             } 
@@ -322,7 +337,7 @@
                 if (POLLING_RECS){
                     startPollingRecommendations();
                 } else {
-                    pollRecommenderAndUserId();
+                    // pollRecommenderAndUserId();
                 }
             };
 		</script>
