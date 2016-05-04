@@ -114,7 +114,23 @@
                 FRAME_NAME = window.name,           // Name for the current frame
                 HEARTBEAT_NAME = "ChildHeartbeat",  // A Message verb for the heartbeat this frame looks for
                 USER_ID = getParameterByName('p1'), // ID to use for the recommender session
-                CLASS_ID = getParameterByName('p2');// Class ID for this recommender session
+                CLASS_ID = getParameterByName('p2'),// Class ID for this recommender session
+                POLLING_RECS = getParameterByName('polling'); // If true, poll recommendations
+            if (USER_ID == null){
+                USER_ID = localStorage.getItem("RECOMMENDER_USER_ID");
+            } else {
+                localStorage.setItem("RECOMMENDER_USER_ID", USER_ID);
+            }
+            if (CLASS_ID != null){
+                CLASS_ID = localStorage.getItem("RECOMMENDER_CLASS_ID");
+            } else {
+                localStorage.setItem("RECOMMENDER_CLASS_ID", CLASS_ID);
+            }
+            if (POLLING_RECS == "1"){
+                POLLING_RECS = true;
+            } else {
+                POLLING_RECS = false;
+            }
 
             var REC_LIST = 'problem-list';
             var DEFAULT_ICON = "/static/img/icon/IconTopicGeneric.png";
@@ -126,6 +142,36 @@
             "RoadMap": "/static/img/icon/IconUserRoadmap.png",
             "Assistments": "/static/img/icon/IconAssistments.png"}
 
+            var IS_POLLING_RECOMMENDATIONS = false,
+                DEFAULT_POLLING_TIME = 60; // Wait a minute before re-polling
+            
+            function startPollingRecommendations(interval){
+                if (interval == null){ interval = DEFAULT_POLLING_TIME; }
+                var pollingFunct = function pollingFunct(){
+                    var myInterval = interval;
+                    if (IS_POLLING_RECOMMENDATIONS){
+                        pollRecommenderAndUserId();
+                        setTimeout(pollingFunct, myInterval*1000);
+                    }
+                }
+                IS_POLLING_RECOMMENDATIONS = true;
+                pollingFunct();
+            }
+            
+            function stopPollingRecommendations(){
+                IS_POLLING_RECOMMENDATIONS = false;
+            }
+            
+            function pollRecommenderAndUserId(){
+                if (localStorage.getItem("RECOMMENDER_USER_ID") != null){
+                    USER_ID = localStorage.getItem("RECOMMENDER_USER_ID");
+                }
+                if (localStorage.getItem("RECOMMENDER_CLASS_ID") != null){
+                    CLASS_ID = localStorage.getItem("RECOMMENDER_CLASS_ID");
+                }
+                REC_CLIENT_SERVICE.requestRecommendations(USER_ID, CLASS_ID, null, 3);
+            };
+            
             function makeRecommederList(recs){
                 var i, x;
                 clearRecommenderList();
@@ -151,7 +197,8 @@
                 $problem.prepend("<img class='RecIcon' src=" + taskIcon + "/>");
                 $problem.click(function(){
                   console.log(this);
-                  window.open($(this).val());
+                  // window.open($(this).val());
+                  $("#assistFrame", window.parent.document).attr("src", $(this).val());
                 });
                 $("#" + REC_LIST).append($problem);
             } 
@@ -264,7 +311,11 @@
                 makeRecommederList(DEFAULT_RECS);
                 
                 // Request recommendations for some user
-                REC_CLIENT_SERVICE.requestRecommendations(USER_ID, CLASS_ID, null, 3);
+                if (POLLING_RECS){
+                    startPollingRecommendations();
+                } else {
+                    pollRecommenderAndUserId();
+                }
             };
 		</script>
 	</head>

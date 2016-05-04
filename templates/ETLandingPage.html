@@ -291,8 +291,8 @@
         }
            
         $(document).ready(function () {
-            addToAssignmentList("Diodes", "https://www.assistments.org/public_preview/link/cHJldmlldz10cnVlJmFub25BbGxvd2VkPXRydWUmd2hpdGVMYWJlbGVkPWZhbHNlJnBwdXJsVmVyPTImYXNzaWdubWVudElEPVBTNjc3ODI5Jm9uRXhpdD1odHRwczovL3d3dy5hc3Npc3RtZW50cy5vcmc=", "Assistments");
-            addToAssignmentList("Transistors", "https://www.assistments.org/public_preview/link/cHJldmlldz10cnVlJmFub25BbGxvd2VkPXRydWUmd2hpdGVMYWJlbGVkPWZhbHNlJnBwdXJsVmVyPTImYXNzaWdubWVudElEPVBTNjc4NjEzJm9uRXhpdD1odHRwczovL3d3dy5hc3Npc3RtZW50cy5vcmc=", "Assistments");
+            addToAssignmentList("Diodes", "http://www.assistmentsdirect.org/assignment/7377a93da5f2e4dbdcc8f361c8376318", "Assistments");
+            addToAssignmentList("Transistors", "http://www.assistmentsdirect.org/assignment/a609d979dc366534ea95e40feea9f392", "Assistments");
             fitContentToParent("recFrame");
             // fitContentToParent("logoimage");
             //fitContentToParent("electronix-logo");
@@ -347,7 +347,9 @@
         <div id="recommended-probs">
             <div id="problem-header">Recommended Problems</div>
             <div id="problem-list">
-                <iframe id="recFrame" src="/RecommenderPanel.html?p1=ChuckRecommender&p2=Classy"></iframe>
+                <!--<iframe id="recFrame" src="/RecommenderPanel.html?p1=ChuckRecommender&p2=Classy"></iframe>-->
+                <iframe id="hiddenRecFrame" hidden src="http://www.assistmentsdirect.org/assignment/52e3593be055ebb5da06907504ee12c4"></iframe>
+                <iframe id="recFrame" src="/RecommenderPanel.html?polling=1"></iframe>
             </div>
             <div id="assignment-header">Assignments</div>
             <div id="assignment-list"></div>
