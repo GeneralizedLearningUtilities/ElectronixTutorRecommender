@@ -116,6 +116,10 @@
                 USER_ID = getParameterByName('p1'), // ID to use for the recommender session
                 CLASS_ID = getParameterByName('p2'),// Class ID for this recommender session
                 POLLING_RECS = getParameterByName('polling'); // If true, poll recommendations
+            console.log("GET THE PARAMS FOR USER");
+            console.log(window.location);
+            console.log(USER_ID);
+            console.log(CLASS_ID);
             if (USER_ID == null){
                 USER_ID = localStorage.getItem("RECOMMENDER_USER_ID");
             } else {
