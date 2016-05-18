@@ -32,5 +32,6 @@ pip install pymongo
 pip install boto
 pip install eventlet
 pip install json_delta
+sudo pip install icalendar
 # pip install gludb
 # pip install SuperGLU

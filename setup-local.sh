@@ -20,4 +20,5 @@ sudo service mongod start
 sudo ln -s ./test.config ./server.config
 # sudo ln -s ../SuperGLU/SuperGLU ./SuperGLU
 # sudo ln -s ../GLUDB/gludb ./gludb
+# sudo ln -s ../icalendar/src/icalendar ./icalendar
 sudo sh setup.sh
