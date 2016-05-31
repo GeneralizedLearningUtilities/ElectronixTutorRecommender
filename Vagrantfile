@@ -13,6 +13,8 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder "../SuperGLU", "/home/vagrant/SuperGLU"
   config.vm.synced_folder "../GLUDB", "/home/vagrant/GLUDB"
   config.vm.synced_folder "../icalendar", "/home/vagrant/icalendar"
+  config.vm.synced_folder "../pytz-2016.4", "/home/vagrant/pytz-2016.4"
+  config.vm.synced_folder "../python-dateutil-2.0", "/home/vagrant/python-dateutil-2.0"
   config.vm.provider "virtualbox" do |vb|
     vb.gui = false
     vb.memory = "512"
