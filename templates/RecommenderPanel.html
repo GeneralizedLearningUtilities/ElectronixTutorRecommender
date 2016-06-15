@@ -192,6 +192,8 @@
                     localStorage.getItem("RECOMMENDER_CLASS_ID") != ''){
                     CLASS_ID = localStorage.getItem("RECOMMENDER_CLASS_ID");
                 }
+                console.log(localStorage);
+                console.log(document.cookie);
                 REC_CLIENT_SERVICE.requestRecommendations(USER_ID, CLASS_ID, null, 3);
             };
             
