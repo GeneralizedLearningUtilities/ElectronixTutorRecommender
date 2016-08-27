@@ -63,7 +63,7 @@
             loggingScope['ASSISTments_p6'] = getParameterByName('p6');
             loggingScope['ASSISTments_p7'] = getParameterByName('p7');
             LOGGING_SERVICE = SuperGLU.Standard_ITS_Logging.StandardITSLoggingService(null,
-                'p1', taskId, null, getParameterByName('p7'), loggingScope);
+                getParameterByName('p1'), taskId, null, getParameterByName('p7'), loggingScope);
             HEARTBEAT_SERVICE = SuperGLU.Heartbeat_Service.HeartbeatService(null, HEARTBEAT_NAME, 30);
 			PARENT_POSTING_STUB = SuperGLU.Messaging_Gateway.PostMessageGatewayStub(PARENT_NAME, null, null, parent);
             
@@ -88,7 +88,7 @@
                 var firstName = getParameterByName('p6'),	// This can be used to address the student by first name
                     score = calculateScore();
                 LOGGING_SERVICE.sendRequestRecommendedTasks('userName', '6');
-                /**LOGGING_SERVICE.sendKCScore('KC1', .15, 1.0);
+                LOGGING_SERVICE.sendKCScore('KC1', .15, 1.0);
                 LOGGING_SERVICE.sendKCScore('KC2', .12, 1.0);
                 LOGGING_SERVICE.sendKCScore('KC1', .20, 1.0);
                 LOGGING_SERVICE.sendKCScore('KC1', .5, 1.0);
@@ -99,7 +99,7 @@
                 LOGGING_SERVICE.sendHint('hint4', 'dummyStepId', 'helpType', 'dummyContent')
                 LOGGING_SERVICE.sendHint('hint5', 'dummyStepId', 'helpType', 'dummyContent')
                 LOGGING_SERVICE.sendPositiveFeedback('posFeedback1', 'dummyStepId', 'dummyContent')
-                LOGGING_SERVICE.sendCompletedTask(score);**/
+                LOGGING_SERVICE.sendCompletedTask(score);
                 HEARTBEAT_SERVICE.stop();
             };
             
@@ -136,6 +136,50 @@
             
             }
             
+            // TESTING FUNCTIONS
+            var CDAT="BEGIN:VCALENDAR\n" + 
+                     "BEGIN:VEVENT\n" + 
+                     "SUMMARY:PushPull-Amplifiers\n" + 
+                     "DTSTART;VALUE=DATE-TIME:20161214T221016\n" + 
+                     "DTEND;VALUE=DATE-TIME:20161218T221016\n" + 
+                     "COMMENT:taskId=PushPull-Amplifiers_TutorGuided_Topic0_PushPull-Amplifiers\n" + 
+                     "END:VEVENT\n" + 
+                     "END:VCALENDAR";
+
+            var UploadStudentCalendarByEmailID = function(studentId, data){
+                if (studentId == null){ studentId = getParameterByName("p1"); }
+                if (data == null){ data = CDAT; }
+                var Actor=studentId;
+                var Verb="ElectronixTutorUploadCalendarVerb";
+                var Object="student";
+                var Result=data;
+                var context = {"calendarAccessPermissions":"owner"};
+
+                var msg = Message(Actor, Verb,Object,Result,"Inform", context); 
+                //I have tried below two methods to make request, Could you tell me which one is correct?
+                // LOGGING_SERVICE.sendLoggingMessage(msg);
+                LOGGING_SERVICE.sendMessage(msg);                  
+            };
+
+            
+            var RequestCalendar = function(studentId){
+                if (studentId == null){ studentId = getParameterByName("p1"); }
+                var context={};
+                // var   message = Message("StudentModelService","Mastery",studentObj , "Request", context);
+                // using ("iCalReader", "requestCalendar",  studentId, "Request"); the speechAct is showing Request. so i use first message.
+                var msg = Message("iCalReader", "requestCalendar",  studentId, null, "Request");  
+                //msg = Message("iCalReader", "requestCalendar",  studentId, "Request");
+                //LOGGING_SERVICE.sendMessage(msg);
+                LOGGING_SERVICE._makeRequest(msg, function(msg, oldMsg){console.log(msg);});
+            };
+            
+            var RequestStudentModel = function(studentId){
+                if (studentId == null){ studentId = getParameterByName("p1"); }
+                var context={};
+                var msg = Message("Student Model Service", "Mastery", studentId, null, "Request", context);
+                LOGGING_SERVICE._makeRequest(msg, function(msg, oldMsg){console.log(msg); console.log(msg.getResult());});
+            };
+
             
             // Function to run after loading the window
             var oldOnload = window.onload;
