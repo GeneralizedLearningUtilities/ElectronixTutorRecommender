@@ -36,7 +36,7 @@
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.1.0/socket.io.min.js"></script>
         
         <!-- SuperGLU Services --> 
-        <script type="text/javascript" src="js/SuperGLU/Services/Orchestration/heartbeat-service.js"></script>
+        <script type="text/javascript" src="/js/SuperGLU/Services/Orchestration/heartbeat-service.js"></script>
 		<script type="text/javascript" src="/js/SuperGLU/Services/LoggingService/standard-its-logging.js"></script>
 		<script type="text/javascript" src="/js/SuperGLU/Services/StudentModel/learning-task.js"></script>
         
@@ -254,7 +254,7 @@
                         if ((self._gateway != null) && (addGatewayContext)){
                             msg = self._gateway.addContextDataToMsg(msg);
                         }
-                        console.log("SENDING");
+                        console.log(msg.getVerb());
                         console.log(msg);
                         self._makeRequest(msg, self.handleRecommendationMessage);
                     };
@@ -339,7 +339,7 @@
                 if (POLLING_RECS){
                     startPollingRecommendations();
                 } else {
-                    // pollRecommenderAndUserId();
+                    pollRecommenderAndUserId();
                 }
             };
 		</script>

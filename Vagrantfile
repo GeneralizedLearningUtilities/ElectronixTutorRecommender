@@ -8,13 +8,13 @@
 Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/trusty64"
   config.vm.network "forwarded_port", guest: 5533, host: 5533
-  config.vm.network "forwarded_port", guest: 80, host: 80
+#  config.vm.network "forwarded_port", guest: 80, host: 80
   config.vm.synced_folder ".", "/home/vagrant/Application"
   config.vm.synced_folder "../SuperGLU", "/home/vagrant/SuperGLU"
   config.vm.synced_folder "../GLUDB", "/home/vagrant/GLUDB"
-  config.vm.synced_folder "../icalendar", "/home/vagrant/icalendar"
-  config.vm.synced_folder "../pytz-2016.4", "/home/vagrant/pytz-2016.4"
-  config.vm.synced_folder "../python-dateutil-2.0", "/home/vagrant/python-dateutil-2.0"
+#  config.vm.synced_folder "../icalendar", "/home/vagrant/icalendar"
+#  config.vm.synced_folder "../pytz-2016.4", "/home/vagrant/pytz-2016.4"
+#  config.vm.synced_folder "../python-dateutil-2.0", "/home/vagrant/python-dateutil-2.0"
   config.vm.provider "virtualbox" do |vb|
     vb.gui = false
     vb.memory = "512"
