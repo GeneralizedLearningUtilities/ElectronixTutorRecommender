@@ -26,7 +26,7 @@ python3 -m venv env --copies
 source $SCRIPT_DIR/env/bin/activate
 
 
-#sudo apt-get install python3-pip
+sudo apt-get install python3-pip
 
 pip3 --version
 
