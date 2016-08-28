@@ -27,6 +27,7 @@ source $SCRIPT_DIR/env/bin/activate
 
 
 sudo apt-get install python3-pip
+curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | sudo python3
 
 pip3 --version
 
