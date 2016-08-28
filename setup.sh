@@ -21,24 +21,31 @@ cd $SCRIPT_DIR
 # Set up a virtual environment using python3, use the new environment, and
 # install our dependencies
 #virtualenv -p python3 env --always-copy
+
+sudo apt-get install -y curl
+sudo apt-get install -y python3-pip
+sudo curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | sudo python3
+
 python3 -m venv env --copies
-
 source $SCRIPT_DIR/env/bin/activate
-
-
-sudo apt-get install python3-pip
-curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | sudo python3
-
 pip3 --version
 
 #pip install --upgrade requests[security]
-sudo python3 -m pip install -U pip3
-sudo python3 -m pip install Flask
-sudo python3 -m pip install flask-socketio==1.1
-sudo python3 -m pip install pymongo
-sudo python3 -m pip install boto
-sudo python3 -m pip install eventlet
-sudo python3 -m pip install json_delta
-sudo python3 -m pip install icalendar
+#sudo python3 -m pip install -U pip3
+#sudo python3 -m pip install Flask
+#sudo python3 -m pip install flask-socketio==1.1
+#sudo python3 -m pip install pymongo
+#sudo python3 -m pip install boto
+#sudo python3 -m pip install eventlet
+#sudo python3 -m pip install json_delta
+#sudo python3 -m pip install icalendar
+pip3 install -U pip3
+pip3 install Flask
+pip3 install flask-socketio==1.1
+pip3 install pymongo
+pip3 install boto
+pip3 install eventlet
+pip3 install json_delta
+pip3 install icalendar
 # pip install gludb
 # pip install SuperGLU
