@@ -87,9 +87,12 @@
             var onClickTheOnlyButton = function(){
                 var firstName = getParameterByName('p6'),	// This can be used to address the student by first name
                     score = calculateScore();
-                LOGGING_SERVICE.sendRequestRecommendedTasks('userName', '6');
-                LOGGING_SERVICE.sendKCScore('KC1', .15, 1.0);
-                LOGGING_SERVICE.sendKCScore('KC2', .12, 1.0);
+               //requestRecommendations('userName', 'className', null, 6);
+               var msg = Message(self._userId, ELECTRONIX_TUTOR_TASK_UPLOAD_VERB, "tasks", null, SuperGLU.Messaging.REQUEST_ACT);
+                LOGGING_SERVICE.addContext(msg);
+                LOGGING_SERVICE.sendMessage(msg);
+                //LOGGING_SERVICE.sendKCScore('KC1', .15, 1.0);
+                /*LOGGING_SERVICE.sendKCScore('KC2', .12, 1.0);
                 LOGGING_SERVICE.sendKCScore('KC1', .20, 1.0);
                 LOGGING_SERVICE.sendKCScore('KC1', .5, 1.0);
                 LOGGING_SERVICE.sendKCScore('KC1', .17, 1.0);
@@ -99,7 +102,8 @@
                 LOGGING_SERVICE.sendHint('hint4', 'dummyStepId', 'helpType', 'dummyContent')
                 LOGGING_SERVICE.sendHint('hint5', 'dummyStepId', 'helpType', 'dummyContent')
                 LOGGING_SERVICE.sendPositiveFeedback('posFeedback1', 'dummyStepId', 'dummyContent')
-                LOGGING_SERVICE.sendCompletedTask(score);
+                LOGGING_SERVICE.sendCompletedTask(score);*/
+               
                 HEARTBEAT_SERVICE.stop();
             };
             
@@ -160,6 +164,25 @@
                 // LOGGING_SERVICE.sendLoggingMessage(msg);
                 LOGGING_SERVICE.sendMessage(msg);                  
             };
+            
+            var requestRecommendations = function requestRecommendations(userId, classroomId, topic, n, context){
+                        var msg;
+                        if (context == null){ context={}; }
+                        if (classroomId != null){ 
+                            context[Standard_ITS_Logging.CLASSROOM_ID_KEY] = classroomId; 
+                        }
+                        if (topic != null){ 
+                            context[Standard_ITS_Logging.TOPIC_ID_KEY] = topic; 
+                        }
+                        msg = Messaging.Message(userId, "RecommendedTasks", 
+                                                null, n, Messaging.REQUEST_ACT, context);
+                        if ((self._gateway != null) && (addGatewayContext)){
+                            msg = self._gateway.addContextDataToMsg(msg);
+                        }
+                        console.log(msg.getVerb());
+                        console.log(msg);
+                        LOGGING_SERVICE._makeRequest(msg, LOGGING_SERVICE.handleRecommendationMessage);
+                    };
 
             
             var RequestCalendar = function(studentId){
