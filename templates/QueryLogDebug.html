@@ -87,12 +87,12 @@
             var onClickTheOnlyButton = function(){
                 var firstName = getParameterByName('p6'),	// This can be used to address the student by first name
                     score = calculateScore();
-               //requestRecommendations('userName', 'className', null, 6);
-               var msg = Message(self._userId, ELECTRONIX_TUTOR_TASK_UPLOAD_VERB, "tasks", null, SuperGLU.Messaging.REQUEST_ACT);
-                LOGGING_SERVICE.addContext(msg);
-                LOGGING_SERVICE.sendMessage(msg);
-                //LOGGING_SERVICE.sendKCScore('KC1', .15, 1.0);
-                /*LOGGING_SERVICE.sendKCScore('KC2', .12, 1.0);
+                requestRecommendations('userName', 'className', null, 6);
+               //var msg = Message(self._userId, ELECTRONIX_TUTOR_TASK_UPLOAD_VERB, "tasks", null, SuperGLU.Messaging.REQUEST_ACT);
+                //LOGGING_SERVICE.addContext(msg);
+                //LOGGING_SERVICE.sendMessage(msg);
+                LOGGING_SERVICE.sendKCScore('KC1', .15, 1.0);
+                LOGGING_SERVICE.sendKCScore('KC2', .12, 1.0);
                 LOGGING_SERVICE.sendKCScore('KC1', .20, 1.0);
                 LOGGING_SERVICE.sendKCScore('KC1', .5, 1.0);
                 LOGGING_SERVICE.sendKCScore('KC1', .17, 1.0);
@@ -102,8 +102,9 @@
                 LOGGING_SERVICE.sendHint('hint4', 'dummyStepId', 'helpType', 'dummyContent')
                 LOGGING_SERVICE.sendHint('hint5', 'dummyStepId', 'helpType', 'dummyContent')
                 LOGGING_SERVICE.sendPositiveFeedback('posFeedback1', 'dummyStepId', 'dummyContent')
-                LOGGING_SERVICE.sendCompletedTask(score);*/
-               
+                LOGGING_SERVICE.sendCompletedTask(score);
+                UploadStudentCalendarByEmailID('test', CDAT)
+                RequestCalendar('test')
                 HEARTBEAT_SERVICE.stop();
             };
             
