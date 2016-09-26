@@ -216,6 +216,13 @@
                     GATEWAY_SERVICE, null, document.getElementById(LOGGER_FRAME_NAME).contentWindow);
                 LOGGING_SERVICE.sendLoadedTask(FRAME_NAME);
             };
+            
+             var onTest = function(){
+                 var msg = Message("iCalReader", "LearnerSessions",  "test2@gmail.com", null, "Request");  
+                //msg = Message("iCalReader", "requestCalendar",  studentId, "Request");
+                //LOGGING_SERVICE.sendMessage(msg);
+                LOGGING_SERVICE._makeRequest(msg, function(msg, oldMsg){console.log(msg);});
+             }
 		</script>
     </head>
     <body>
@@ -238,6 +245,7 @@
             <input type="file" id="files" name="files[]" multiple />
             <output id="list"></output>
             <button onclick="onUploadCSV();">upload</button>
+            <button onclick="onTest();">test</button>
             <script type="text/javascript">
                  document.getElementById('files').addEventListener('change', handleFileSelect, false);
             </script>
