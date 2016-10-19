@@ -87,7 +87,7 @@
             var onClickTheOnlyButton = function(){
                 var firstName = getParameterByName('p6'),	// This can be used to address the student by first name
                     score = calculateScore();
-                requestRecommendations('userName', 'className', null, 6);
+                //requestRecommendations('userName', 'className', null, 6);
                //var msg = Message(self._userId, ELECTRONIX_TUTOR_TASK_UPLOAD_VERB, "tasks", null, SuperGLU.Messaging.REQUEST_ACT);
                 //LOGGING_SERVICE.addContext(msg);
                 //LOGGING_SERVICE.sendMessage(msg);
@@ -218,7 +218,7 @@
             };
             
              var onTest = function(){
-                 var msg = Message("iCalReader", "LearnerSessions",  "test2@gmail.com", null, "Request");  
+                 var msg = Message("iCalReader", "LearnerSessions",  "test@gmail.com", null, "Request");  
                 //msg = Message("iCalReader", "requestCalendar",  studentId, "Request");
                 //LOGGING_SERVICE.sendMessage(msg);
                 LOGGING_SERVICE._makeRequest(msg, function(msg, oldMsg){console.log(msg);});
