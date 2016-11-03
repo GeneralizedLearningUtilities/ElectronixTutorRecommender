@@ -91,7 +91,7 @@
                //var msg = Message(self._userId, ELECTRONIX_TUTOR_TASK_UPLOAD_VERB, "tasks", null, SuperGLU.Messaging.REQUEST_ACT);
                 //LOGGING_SERVICE.addContext(msg);
                 //LOGGING_SERVICE.sendMessage(msg);
-                LOGGING_SERVICE.sendKCScore('KC1', .15, 1.0);
+                /*LOGGING_SERVICE.sendKCScore('KC1', .15, 1.0);
                 LOGGING_SERVICE.sendKCScore('KC2', .12, 1.0);
                 LOGGING_SERVICE.sendKCScore('KC1', .20, 1.0);
                 LOGGING_SERVICE.sendKCScore('KC1', .5, 1.0);
@@ -104,7 +104,9 @@
                 LOGGING_SERVICE.sendPositiveFeedback('posFeedback1', 'dummyStepId', 'dummyContent')
                 LOGGING_SERVICE.sendCompletedTask(score);
                 UploadStudentCalendarByEmailID('test', CDAT)
-                RequestCalendar('test')
+                RequestCalendar('test')*/
+                sendCompletedTaskWithTaskName(.25, "TR_KC_Q3_TRI_PPA", "mockUser")
+                requestRecommendations("mockUser", 'className', null, 6);
                 HEARTBEAT_SERVICE.stop();
             };
             
@@ -165,6 +167,12 @@
                 // LOGGING_SERVICE.sendLoggingMessage(msg);
                 LOGGING_SERVICE.sendMessage(msg);                  
             };
+            
+            var sendCompletedTaskWithTaskName = function sendCompletedTaskWithTaskName(score, taskID, userID){
+            var msg = Message(userID, COMPLETED_VERB, taskID, score);
+            LOGGING_SERVICE.sendLoggingMessage(msg);
+        };
+            
             
             var requestRecommendations = function requestRecommendations(userId, classroomId, topic, n, context){
                         var msg;
