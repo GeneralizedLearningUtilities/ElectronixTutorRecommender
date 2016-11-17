@@ -27,13 +27,16 @@
 		<script type="text/javascript">
             // Set a window name
             window.name = "RecommenderLoggingGateway";
-            var HTTP_MESSAGING_GATEWAY,
+            var HTTP_MESSAGING_GATEWAY,                
                 MAIN_POSTING_GATEWAY,               // A gateway for relaying messages to other gateways and services (as a tree)
+                TOP_WINDOW = window.top,            // A reference to the top window
+                TOP_POSTING_GATEWAY,                // A stub for posting messages to the top window
                 ACTIVITY_WINDOW,                    // Activity window iframe reference
                 ACTIVITY_GATEWAY,                   // An activity window gateway stub to send HTML5 messages
                 TEST_SERVICE,                       // A test service that can send simple messages and watch for messages
                 HEART_MONITOR_SERVICE,              // A heart monitor service that looks for a heartbeat named in HEARTBEAT_NAME
                 FRAME_NAME = window.name,           // Name for the current frame
+                TOP_GATEWAY_ID = "TopFrame",        // Default name for the top frame
                 ACTIVITY_GATEWAY_ID = "ActivityFrame";  // Name to give the postMessage gateway in the activity frame
             
             /** When page loaded, set up the services. **/
@@ -48,11 +51,12 @@
                 // Set up Services and Gateways
                 ACTIVITY_WINDOW = parent;
                 ACTIVITY_GATEWAY = SuperGLU.Messaging_Gateway.PostMessageGatewayStub(ACTIVITY_GATEWAY_ID, null, null, ACTIVITY_WINDOW);
+                TOP_GATEWAY = SuperGLU.Messaging_Gateway.PostMessageGatewayStub(TOP_GATEWAY_ID, null, null, TOP_WINDOW);
                 TEST_SERVICE = SuperGLU.Messaging_Gateway.TestService("LoggerTestService");
 			
                 /** Create a gateway as: GatewayId, Nodes (Gateways/Services/Stubs), Parent Gateway, Scope added to each message**/
                 MAIN_POSTING_GATEWAY = SuperGLU.Messaging_Gateway.PostMessageGateway(FRAME_NAME, 
-                    [ACTIVITY_GATEWAY, TEST_SERVICE], 
+                    [ACTIVITY_GATEWAY, TOP_GATEWAY, TEST_SERVICE], 
                     null, gatewayScope);
                 HTTP_MESSAGING_GATEWAY = Messaging_Gateway.HTTPMessagingGateway(null, [MAIN_POSTING_GATEWAY], window.location.protocol + "//" + document.domain + ':' + location.port);
                 
