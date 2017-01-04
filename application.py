@@ -153,7 +153,7 @@ def before_first():
     else:
         # Production!
         logWarning('Production Mode: MongoDB')
-        default_database(Database( 'mongodb', mongo_url='mongodb://localhost:27017/TestDB'))
+        default_database(Database( 'mongodb', mongo_url='mongodb://dockerhost:27017/TestDB'))
     set_db_application_prefix(APPLICATION_NAME)
 
     # Make sure we have our tables
