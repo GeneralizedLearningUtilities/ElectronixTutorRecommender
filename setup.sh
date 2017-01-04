@@ -47,5 +47,6 @@ pip3 install boto
 pip3 install eventlet
 pip3 install json_delta
 pip3 install icalendar
+pip3 install stomp.py
 # pip install gludb
 # pip install SuperGLU
