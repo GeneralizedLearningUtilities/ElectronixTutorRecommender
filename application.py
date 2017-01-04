@@ -152,8 +152,8 @@ def before_first():
         default_database(Database( 'mongodb', mongo_url='mongodb://localhost:27017/TestDB'))
     else:
         # Production!
-        logWarning('Production Mode: DynamoDB')
-        default_database(Database('dynamodb'))
+        logWarning('Production Mode: MongoDB')
+        default_database(Database( 'mongodb', mongo_url='mongodb://localhost:27017/TestDB'))
     set_db_application_prefix(APPLICATION_NAME)
 
     # Make sure we have our tables
