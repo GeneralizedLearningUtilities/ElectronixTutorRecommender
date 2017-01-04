@@ -153,7 +153,7 @@ def before_first():
     else:
         # Production!
        logWarning('Production Mode: DynamoDB')
-        default_database(Database('dynamodb'))
+       default_database(Database('dynamodb'))
     set_db_application_prefix(APPLICATION_NAME)
 
     # Make sure we have our tables
