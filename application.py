@@ -12,8 +12,9 @@ if sys.version_info < (3, 0):
 import os
 import traceback
 import logging
-import flask.ext.socketio
+import flask_socketio
 import eventlet
+import flask
 
 from SuperGLU.Util.ErrorHandling import logError, logWarning
 from flask import Flask
@@ -77,7 +78,7 @@ logWarning('Application debug is %s'%(application.debug,))
 application.register_blueprint(BASIC_BLUEPRINT)
 
 # Start up the messaging system
-SOCKET_IO_CORE = flask.ext.socketio.SocketIO(application)
+SOCKET_IO_CORE = flask_socketio.SocketIO(application)
 
 #Allow some env specification of helpful test services
 services = [DBLoggingService(), StudentModelMessaging(), GLUDBStorageService(),
@@ -86,7 +87,7 @@ services = [DBLoggingService(), StudentModelMessaging(), GLUDBStorageService(),
 MESSAGING_GATEWAY = HTTPMessagingGateway(
         None,
         SOCKET_IO_CORE,
-        flask.ext.socketio,
+        flask_socketio,
         services
     )
 
